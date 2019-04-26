@@ -35,7 +35,7 @@ public class WebViewJsBridgeActivity extends AppCompatActivity {
         webSettings.setUseWideViewPort(false);//这里需要设置为true，才能让Webivew支持<meta>标签的viewport属性
         webSettings.setDatabaseEnabled(false);
         webSettings.setUserAgent(webSettings.getUserAgentString());
-//        webView.addJavascriptInterface(getDataFromAndroid(), "jsEqObj");
+        webView.addJavascriptInterface(new JsInterface(this), "JsInterface");
 
         webSettings.setUserAgentString(webSettings.getUserAgentString()
                 + ";deviceType/Android"
