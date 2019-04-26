@@ -2,6 +2,7 @@ package com.shunan.webviewjsbridge;
 
 import android.content.Context;
 
+import com.orhanobut.logger.Logger;
 import com.tencent.smtt.sdk.QbSdk;
 
 public class JsBridge {
@@ -14,7 +15,7 @@ public class JsBridge {
 
             @Override
             public void onViewInitFinished(boolean b) {
-
+                Logger.d("是否启动X5内核：" + b);
             }
         });
     }

@@ -6,6 +6,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
 
+import com.orhanobut.logger.Logger;
 import com.tencent.smtt.sdk.WebSettings;
 import com.tencent.smtt.sdk.WebView;
 import com.tencent.smtt.sdk.WebViewClient;
@@ -13,10 +14,12 @@ import com.tencent.smtt.sdk.WebViewClient;
 public class WebViewJsBridgeActivity extends AppCompatActivity {
     private WebView webView;
     private WebSettings webSettings;
+    private JsInterface jsInterface;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Logger.d("onCreate");
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getSupportActionBar().hide();// 隐藏ActionBar
         setContentView(R.layout.activity_web_view);
@@ -35,7 +38,8 @@ public class WebViewJsBridgeActivity extends AppCompatActivity {
         webSettings.setUseWideViewPort(false);//这里需要设置为true，才能让Webivew支持<meta>标签的viewport属性
         webSettings.setDatabaseEnabled(false);
         webSettings.setUserAgent(webSettings.getUserAgentString());
-        webView.addJavascriptInterface(new JsInterface(this), "JsInterface");
+        jsInterface = new JsInterface(this);
+        webView.addJavascriptInterface(jsInterface, "JsInterface");
 
         webSettings.setUserAgentString(webSettings.getUserAgentString()
                 + ";deviceType/Android"
@@ -54,6 +58,12 @@ public class WebViewJsBridgeActivity extends AppCompatActivity {
                 super.onPageFinished(webView, s);
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Logger.d("onResume");
     }
 
     @Override
