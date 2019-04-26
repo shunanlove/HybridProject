@@ -12,6 +12,5 @@ public class MyApplication extends Application {
     public void onCreate() {
         super.onCreate();
         JsBridge.init(this);
-        Logger.addLogAdapter(new AndroidLogAdapter());
     }
 }
