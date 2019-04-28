@@ -2,8 +2,9 @@ package com.shunan.baseproject;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.orhanobut.logger.Logger;
 import com.shunan.webviewjsbridge.WebViewJsBridgeActivity;
