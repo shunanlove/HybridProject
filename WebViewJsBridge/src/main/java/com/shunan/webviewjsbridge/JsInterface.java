@@ -39,7 +39,7 @@ public class JsInterface {
 
     @JavascriptInterface
     public void shareTwoParameter(String url, String type) {
-        switch (type){
+        switch (type) {
             case "微信":
                 break;
             case "微信朋友圈":
@@ -51,8 +51,6 @@ public class JsInterface {
             case "QQ空间":
                 break;
         }
-    }
-
     }
 
     /**
@@ -104,7 +102,7 @@ public class JsInterface {
 
     @JavascriptInterface
     public void shareFiveParameter(String title, String text, String url, String logourl, String type) {
-        switch (type){
+        switch (type) {
             case "微信":
                 break;
             case "微信朋友圈":
@@ -121,7 +119,7 @@ public class JsInterface {
 
     @JavascriptInterface
     public void shareSixParameter(String title, String text, String url, String logourl, String callback, String type) {
-        switch (type){
+        switch (type) {
             case "微信":
                 break;
             case "微信朋友圈":
