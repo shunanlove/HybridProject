@@ -1,0 +1,13 @@
+<resources>
+
+
+
+    <style name="WrapWrapTv" parent="WrapWrap">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:gravity">center</item>
+        <item name="background">@drawable/selector_btn_orange</item>
+        <item name="android:onClick">onClick</item>
+        <item name="android:padding">4dp</item>
+    </style>
+</resources>

@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.shunan.webviewjsbridge">
 
+    <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
@@ -13,6 +14,7 @@
         <activity
             android:name="com.shunan.webviewjsbridge.WebViewJsBridgeActivity"
             android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity android:name=".ScanActivity" />
     </application>
 
 </manifest>

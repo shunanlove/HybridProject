@@ -1,13 +1,29 @@
 package com.shunan.webviewjsbridge;
 
-import android.app.Activity;
+import android.Manifest;
+import android.content.Intent;
 import android.webkit.JavascriptInterface;
 import android.widget.Toast;
 
-public class JsInterface {
-    private Activity activity;
+import androidx.appcompat.app.AppCompatActivity;
 
-    public JsInterface(Activity activity) {
+import com.google.android.material.snackbar.Snackbar;
+import com.karumi.dexter.Dexter;
+import com.karumi.dexter.PermissionToken;
+import com.karumi.dexter.listener.PermissionDeniedResponse;
+import com.karumi.dexter.listener.PermissionGrantedResponse;
+import com.karumi.dexter.listener.PermissionRequest;
+import com.karumi.dexter.listener.single.CompositePermissionListener;
+import com.karumi.dexter.listener.single.PermissionListener;
+import com.karumi.dexter.listener.single.SnackbarOnDeniedPermissionListener;
+
+
+public class JsInterface {
+    private final int CARMERA_CODE = 112;
+    private AppCompatActivity activity;
+    public static final int REQUEST_CODE_SCAN = 400;
+
+    public JsInterface(AppCompatActivity activity) {
         this.activity = activity;
     }
 
@@ -24,5 +40,52 @@ public class JsInterface {
     @JavascriptInterface
     public void shareWxUrl(String url, String img, String title, String content) {
 
+    }
+
+    /**
+     * 跳转扫码页面
+     */
+    @JavascriptInterface
+    public void goToCapture() {
+        PermissionListener listener = new CompositePermissionListener(getPermissionListener(),
+                getSnackbarOnDeniedPermissionListener("扫描二维码需要相机权限，请开启。"));
+        Dexter.withActivity(activity)
+                .withPermission(Manifest.permission.CAMERA)
+                .withListener(listener).check();
+    }
+
+    private PermissionListener getPermissionListener() {
+        return new PermissionListener() {
+            @Override
+            public void onPermissionGranted(PermissionGrantedResponse response) {
+                Intent intent = new Intent(activity, ScanActivity.class);
+                activity.startActivityForResult(intent, REQUEST_CODE_SCAN);
+            }
+
+            @Override
+            public void onPermissionDenied(PermissionDeniedResponse response) {
+
+            }
+
+            @Override
+            public void onPermissionRationaleShouldBeShown(PermissionRequest permission, PermissionToken token) {
+                token.continuePermissionRequest();
+            }
+        };
+    }
+
+    private SnackbarOnDeniedPermissionListener getSnackbarOnDeniedPermissionListener(String content) {
+        return SnackbarOnDeniedPermissionListener.Builder.with(activity.findViewById(android.R.id.content),
+                content).withOpenSettingsButton("去设置").withCallback(new Snackbar.Callback() {
+            @Override
+            public void onShown(Snackbar snackbar) {
+                // Event handler for when the given Snackbar is visible
+            }
+
+            @Override
+            public void onDismissed(Snackbar snackbar, int event) {
+                // Event handler for when the given Snackbar has been dismissed
+            }
+        }).build();
     }
 }

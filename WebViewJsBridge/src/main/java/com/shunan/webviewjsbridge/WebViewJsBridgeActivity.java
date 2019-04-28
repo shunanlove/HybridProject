@@ -1,5 +1,6 @@
 package com.shunan.webviewjsbridge;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
@@ -11,6 +12,8 @@ import com.orhanobut.logger.Logger;
 import com.tencent.smtt.sdk.WebSettings;
 import com.tencent.smtt.sdk.WebView;
 import com.tencent.smtt.sdk.WebViewClient;
+
+import static com.shunan.webviewjsbridge.JsInterface.REQUEST_CODE_SCAN;
 
 public class WebViewJsBridgeActivity extends AppCompatActivity {
     private WebView webView;
@@ -27,6 +30,8 @@ public class WebViewJsBridgeActivity extends AppCompatActivity {
         webView = findViewById(R.id.webView);
         initWebView();
         webView.loadUrl("http://s.caihuimall.net/eq-cms/policy/index?token=e5793ffd1a7ddb2712a6c2d86fe08bbe");
+
+        jsInterface.goToCapture();
     }
 
     private void initWebView() {
@@ -77,5 +82,16 @@ public class WebViewJsBridgeActivity extends AppCompatActivity {
             }
         }
         return false;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        // 扫描二维码/条码回传
+        if (requestCode == REQUEST_CODE_SCAN && resultCode == RESULT_OK) {
+            if (data != null) {
+                String content = data.getStringExtra("result");
+            }
+        }
     }
 }
