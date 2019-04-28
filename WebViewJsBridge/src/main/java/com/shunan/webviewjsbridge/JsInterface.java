@@ -38,7 +38,20 @@ public class JsInterface {
     }
 
     @JavascriptInterface
-    public void shareWxUrl(String url, String img, String title, String content) {
+    public void shareTwoParameter(String url, String type) {
+        switch (type){
+            case "微信":
+                break;
+            case "微信朋友圈":
+                break;
+            case "微信收藏":
+                break;
+            case "QQ":
+                break;
+            case "QQ空间":
+                break;
+        }
+    }
 
     }
 
@@ -88,4 +101,40 @@ public class JsInterface {
             }
         }).build();
     }
+
+    @JavascriptInterface
+    public void shareFiveParameter(String title, String text, String url, String logourl, String type) {
+        switch (type){
+            case "微信":
+                break;
+            case "微信朋友圈":
+                break;
+            case "微信收藏":
+                break;
+            case "QQ":
+                break;
+            case "QQ空间":
+                break;
+        }
+
+    }
+
+    @JavascriptInterface
+    public void shareSixParameter(String title, String text, String url, String logourl, String callback, String type) {
+        switch (type){
+            case "微信":
+                break;
+            case "微信朋友圈":
+                break;
+            case "微信收藏":
+                break;
+            case "QQ":
+                break;
+            case "QQ空间":
+                break;
+        }
+
+    }
+
+
 }
