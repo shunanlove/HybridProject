@@ -37,22 +37,6 @@ public class JsInterface {
         Toast.makeText(activity, mes, Toast.LENGTH_LONG).show();
     }
 
-    @JavascriptInterface
-    public void shareTwoParameter(String url, String type) {
-        switch (type) {
-            case "微信":
-                break;
-            case "微信朋友圈":
-                break;
-            case "微信收藏":
-                break;
-            case "QQ":
-                break;
-            case "QQ空间":
-                break;
-        }
-    }
-
     /**
      * 跳转扫码页面
      */
@@ -99,6 +83,23 @@ public class JsInterface {
             }
         }).build();
     }
+
+    @JavascriptInterface
+    public void shareTwoParameter(String url, String type) {
+        switch (type) {
+            case "微信":
+                break;
+            case "微信朋友圈":
+                break;
+            case "微信收藏":
+                break;
+            case "QQ":
+                break;
+            case "QQ空间":
+                break;
+        }
+    }
+
 
     @JavascriptInterface
     public void shareFiveParameter(String title, String text, String url, String logourl, String type) {
