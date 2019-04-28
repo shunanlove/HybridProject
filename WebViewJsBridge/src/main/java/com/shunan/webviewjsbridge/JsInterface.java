@@ -22,7 +22,7 @@ public class JsInterface {
     }
 
     @JavascriptInterface
-    public void shareWxUrl(String img, String title, String content) {
+    public void shareWxUrl(String url, String img, String title, String content) {
 
     }
 }
