@@ -20,7 +20,9 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, WebViewJsBridgeActivity.class));
+                Intent intent = new Intent(MainActivity.this, WebViewJsBridgeActivity.class);
+                intent.putExtra("url","http://s.caihuimall.net/eq-cms/policy/index?token=e5793ffd1a7ddb2712a6c2d86fe08bbe");
+                startActivity(intent);
             }
         });
     }

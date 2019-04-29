@@ -2,20 +2,16 @@ package com.shunan.webviewjsbridge;
 
 import android.Manifest;
 import android.content.Intent;
+import android.net.Uri;
 import android.webkit.JavascriptInterface;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.material.snackbar.Snackbar;
 import com.karumi.dexter.Dexter;
-import com.karumi.dexter.PermissionToken;
-import com.karumi.dexter.listener.PermissionDeniedResponse;
 import com.karumi.dexter.listener.PermissionGrantedResponse;
-import com.karumi.dexter.listener.PermissionRequest;
-import com.karumi.dexter.listener.single.CompositePermissionListener;
-import com.karumi.dexter.listener.single.PermissionListener;
-import com.karumi.dexter.listener.single.SnackbarOnDeniedPermissionListener;
+import com.shunan.webviewjsbridge.listener.MyPermissionListener;
+import com.shunan.webviewjsbridge.utils.MyUtils;
 
 
 public class JsInterface {
@@ -42,46 +38,15 @@ public class JsInterface {
      */
     @JavascriptInterface
     public void goToCapture() {
-        PermissionListener listener = new CompositePermissionListener(getPermissionListener(),
-                getSnackbarOnDeniedPermissionListener("扫描二维码需要相机权限，请开启。"));
         Dexter.withActivity(activity)
                 .withPermission(Manifest.permission.CAMERA)
-                .withListener(listener).check();
-    }
-
-    private PermissionListener getPermissionListener() {
-        return new PermissionListener() {
-            @Override
-            public void onPermissionGranted(PermissionGrantedResponse response) {
-                Intent intent = new Intent(activity, ScanActivity.class);
-                activity.startActivityForResult(intent, REQUEST_CODE_SCAN);
-            }
-
-            @Override
-            public void onPermissionDenied(PermissionDeniedResponse response) {
-
-            }
-
-            @Override
-            public void onPermissionRationaleShouldBeShown(PermissionRequest permission, PermissionToken token) {
-                token.continuePermissionRequest();
-            }
-        };
-    }
-
-    private SnackbarOnDeniedPermissionListener getSnackbarOnDeniedPermissionListener(String content) {
-        return SnackbarOnDeniedPermissionListener.Builder.with(activity.findViewById(android.R.id.content),
-                content).withOpenSettingsButton("去设置").withCallback(new Snackbar.Callback() {
-            @Override
-            public void onShown(Snackbar snackbar) {
-                // Event handler for when the given Snackbar is visible
-            }
-
-            @Override
-            public void onDismissed(Snackbar snackbar, int event) {
-                // Event handler for when the given Snackbar has been dismissed
-            }
-        }).build();
+                .withListener(new MyPermissionListener(activity, "扫描二维码需要相机权限，请开启。") {
+                    @Override
+                    public void authorizationSucceeded(PermissionGrantedResponse response) {
+                        Intent intent = new Intent(activity, ScanActivity.class);
+                        activity.startActivityForResult(intent, REQUEST_CODE_SCAN);
+                    }
+                }).check();
     }
 
     @JavascriptInterface
@@ -135,5 +100,78 @@ public class JsInterface {
 
     }
 
+    /**
+     * 跳转百度地图
+     *
+     * @param mLat        //经度
+     * @param mLng        //维度
+     * @param mAddressStr //目的地
+     */
+    @JavascriptInterface
+    public void goToBaiduMap(String mLat, String mLng, String mAddressStr) {
+        if (!MyUtils.isInstalled(activity, "com.baidu.BaiduMap")) {
+            Toast.makeText(activity, "请先安装百度地图客户端", Toast.LENGTH_LONG).show();
+            return;
+        }
+        Intent intent = new Intent();
+        intent.setData(Uri.parse("baidumap://map/direction?destination=latlng:"
+                + mLat + "," + mLng + "|name:" + mAddressStr + // 终点
+                "&mode=driving" + // 导航路线方式
+                "&src=" + activity.getPackageName()));
+        activity.startActivity(intent); // 启动调用
+    }
 
+    /**
+     * 跳转高德地图
+     *
+     * @param mLat        //经度
+     * @param mLng        //维度
+     * @param mAddressStr //目的地
+     */
+    @JavascriptInterface
+    public void goToGaodeMap(String mLat, String mLng, String mAddressStr) {
+        if (!MyUtils.isInstalled(activity, "com.autonavi.minimap")) {
+            Toast.makeText(activity, "请先安装高德地图客户端", Toast.LENGTH_LONG).show();
+            return;
+        }
+        StringBuffer stringBuffer = new StringBuffer("androidamap://navi?sourceApplication=").append(activity.getPackageName());
+        stringBuffer.append("&lat=").append(mLat)
+                .append("&lon=").append(mLng).append("&keywords=" + mAddressStr)
+                .append("&dev=").append(0)
+                .append("&style=").append(2);
+        Intent intent = new Intent("android.intent.action.VIEW", Uri.parse(stringBuffer.toString()));
+        intent.setPackage("com.autonavi.minimap");
+        activity.startActivity(intent);
+    }
+
+    /**
+     * 跳转腾讯地图
+     *
+     * @param mLat        //经度
+     * @param mLng        //维度
+     * @param mAddressStr //目的地
+     */
+    @JavascriptInterface
+    public void goToTencentMap(String mLat, String mLng, String mAddressStr) {
+        if (!MyUtils.isInstalled(activity, "com.tencent.map")) {
+            Toast.makeText(activity, "请先安装腾讯地图客户端", Toast.LENGTH_LONG).show();
+            return;
+        }
+        StringBuffer stringBuffer = new StringBuffer("qqmap://map/routeplan?type=drive")
+                .append("&tocoord=").append(mLat).append(",").append(mLng).append("&to=" + mAddressStr);
+        Intent intent = new Intent("android.intent.action.VIEW", Uri.parse(stringBuffer.toString()));
+        activity.startActivity(intent);
+    }
+
+    /**
+     * 拨打电话（跳转到拨号界面，用户手动点击拨打）
+     *
+     * @param phoneNum 电话号码
+     */
+    public void callPhone(String phoneNum) {
+        Intent intent = new Intent(Intent.ACTION_DIAL);
+        Uri data = Uri.parse("tel:" + phoneNum);
+        intent.setData(data);
+        activity.startActivity(intent);
+    }
 }

@@ -16,9 +16,12 @@ import com.tencent.smtt.sdk.WebViewClient;
 import static com.shunan.webviewjsbridge.JsInterface.REQUEST_CODE_SCAN;
 
 public class WebViewJsBridgeActivity extends AppCompatActivity {
+    private static final String OPEN = "open://";
+
     private WebView webView;
     private WebSettings webSettings;
     private JsInterface jsInterface;
+    private Bundle extras;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,11 +30,12 @@ public class WebViewJsBridgeActivity extends AppCompatActivity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getSupportActionBar().hide();// 隐藏ActionBar
         setContentView(R.layout.activity_web_view);
+
+        extras = getIntent().getExtras();
         webView = findViewById(R.id.webView);
         initWebView();
-        webView.loadUrl("http://s.caihuimall.net/eq-cms/policy/index?token=e5793ffd1a7ddb2712a6c2d86fe08bbe");
+        webView.loadUrl(extras.getString("url"));
 
-        jsInterface.goToCapture();
     }
 
     private void initWebView() {
@@ -49,7 +53,7 @@ public class WebViewJsBridgeActivity extends AppCompatActivity {
 
         webSettings.setUserAgentString(webSettings.getUserAgentString()
                 + ";deviceType/Android"
-                + ";VERSION_CODE/" + String.valueOf(BuildConfig.VERSION_CODE)
+                + ";VERSION_CODE/" + BuildConfig.VERSION_CODE
                 + ";VERSION_NAME/" + BuildConfig.VERSION_NAME
                 + ";isapp/zyq366app");
 
