@@ -15,7 +15,7 @@ nativeAlert(String mes)
 /**
 * 跳转扫码页面
 */
-goToCapture()
+scanQrCode()
 
 /**
 * 跳转百度地图
