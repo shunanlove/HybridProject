@@ -1,11 +1,9 @@
 # BaseProject
 
 
-/**
-* 关闭当前界面
-*/
+/**关闭当前界面*/
 
-colse() //关闭页面
+colse()
 
 /**
 * 弹出Toast
