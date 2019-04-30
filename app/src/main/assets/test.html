@@ -1,0 +1,34 @@
+<html>
+<script language="javascript">
+let native = window.JsInterface;
+function scanQrCode(msg)
+{
+    document.getElementById("scanQrCode").innerHTML= "3、扫描二维码:"+msg
+}
+
+</script>
+<body>
+<h1>测试</h1>
+<div style="margin-top:10px">
+    <button onclick="native.close()">1、关闭页面</button>
+</div>
+<div style="margin-top:10px">
+    <button onclick="native.nativeAlert('toast')">2、弹出Toast</button>
+</div>
+<div style="margin-top:10px">
+    <button id="scanQrCode" onclick="native.scanQrCode()">3、扫描二维码</button>
+</div>
+<div style="margin-top:10px">
+    <button onclick="native.goToBaiduMap('38.861318','121.533141','高新万达')">4、百度导航</button>
+</div>
+<div style="margin-top:10px">
+    <button onclick="native.goToGaodeMap('38.861318','121.533141','高新万达')">5、高德导航</button>
+</div>
+<div style="margin-top:10px">
+    <button onclick="native.goToTencentMap('38.861318','121.533141','高新万达')">6、腾讯导航</button>
+</div>
+<div style="margin-top:10px">
+    <button onclick="native.callPhone('13236903697')">7、拨打电话</button>
+</div>
+</body>
+</html>

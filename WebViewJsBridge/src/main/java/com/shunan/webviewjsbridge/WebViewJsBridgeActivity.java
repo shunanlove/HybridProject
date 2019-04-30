@@ -48,7 +48,7 @@ public class WebViewJsBridgeActivity extends AppCompatActivity {
         webSettings.setUseWideViewPort(false);//这里需要设置为true，才能让Webivew支持<meta>标签的viewport属性
         webSettings.setDatabaseEnabled(false);
         webSettings.setUserAgent(webSettings.getUserAgentString());
-        jsInterface = new JsInterface(this);
+        jsInterface = new JsInterface(this, webView);
         webView.addJavascriptInterface(jsInterface, "JsInterface");
 
         webSettings.setUserAgentString(webSettings.getUserAgentString()
@@ -95,6 +95,7 @@ public class WebViewJsBridgeActivity extends AppCompatActivity {
         if (requestCode == REQUEST_CODE_SCAN && resultCode == RESULT_OK) {
             if (data != null) {
                 String content = data.getStringExtra("result");
+                webView.loadUrl("javascript:scanQrCode('" + content + "')");
             }
         }
     }
