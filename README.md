@@ -1,13 +1,13 @@
 # BaseProject
 
 
-#关闭当前界面
+# 关闭当前界面
 
 colse()
 
 
-#弹出Toast
-#@param mes //提示文字内容
+# 弹出Toast
+# @param mes //提示文字内容
 
 nativeAlert(String mes)
 
