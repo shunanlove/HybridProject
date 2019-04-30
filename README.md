@@ -11,11 +11,13 @@ colse() //关闭页面
 * 弹出Toast
 * @param mes //提示文字内容
 */
+
 nativeAlert(String mes)
 
 /**
 * 跳转扫码页面
 */
+
 scanQrCode()
 
 /**
@@ -25,6 +27,7 @@ scanQrCode()
 * @param mLng        //维度
 * @param mAddressStr //目的地
 */
+
 goToBaiduMap(String mLat, String mLng, String mAddressStr)
 
 /**
@@ -34,6 +37,7 @@ goToBaiduMap(String mLat, String mLng, String mAddressStr)
 * @param mLng        //维度
 * @param mAddressStr //目的地
 */
+
 goToGaodeMap(String mLat, String mLng, String mAddressStr)
 
 /**
@@ -43,6 +47,7 @@ goToGaodeMap(String mLat, String mLng, String mAddressStr)
 * @param mLng        //维度
 * @param mAddressStr //目的地
 */
+
 goToTencentMap(String mLat, String mLng, String mAddressStr)
 
 /**
@@ -50,4 +55,5 @@ goToTencentMap(String mLat, String mLng, String mAddressStr)
 *
 * @param phoneNum 电话号码
 */
+
 callPhone(String phoneNum)
