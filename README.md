@@ -1,2 +1,2 @@
 # BaseProject
- colse()
+ colse() //关闭页面
