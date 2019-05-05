@@ -5,6 +5,13 @@ function scanQrCode(msg)
 {
     document.getElementById("scanQrCode").innerHTML= "3、扫描二维码:"+msg
 }
+let obj = {
+        msg:'toast',
+        success:function(){
+
+        }
+     }
+
 
 </script>
 <body>
@@ -13,7 +20,7 @@ function scanQrCode(msg)
     <button onclick="native.close()">1、关闭页面</button>
 </div>
 <div style="margin-top:10px">
-    <button onclick="native.nativeAlert('toast')">2、弹出Toast</button>
+    <button onclick="native.nativeAlert(obj)">2、弹出Toast</button>
 </div>
 <div style="margin-top:10px">
     <button id="scanQrCode" onclick="native.scanQrCode()">3、扫描二维码</button>

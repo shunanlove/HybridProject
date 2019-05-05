@@ -6,7 +6,7 @@ import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.Logger;
 import com.tencent.smtt.sdk.QbSdk;
 
-public class JsBridge {
+public class JsConfig {
     public static void init(Context context) {
         QbSdk.initX5Environment(context, new QbSdk.PreInitCallback() {
             @Override
