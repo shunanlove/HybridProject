@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.orhanobut.logger.Logger;
 import com.shunan.webviewjsbridge.WebViewJsBridgeActivity;
 
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
