@@ -62,53 +62,86 @@ public class JsInterface {
 
     @JavascriptInterface
     public void shareTwoParameter(String url, String type) {
-        switch (type) {
-            case "微信":
+        switch (type){
+            case "Wechat":
+                //微信好友
                 break;
-            case "微信朋友圈":
+            case "WechatMoments":
+                //微信朋友圈
                 break;
-            case "微信收藏":
+            case "WechatFavorite":
+                //微信收藏
                 break;
             case "QQ":
+                //QQ好友
                 break;
-            case "QQ空间":
+            case "QZone":
+                //QQ空间
                 break;
         }
     }
 
+    @JavascriptInterface
+    public void shareFourParameter(String title, String text, String url, String type) {
+        switch (type){
+            case "Wechat":
+                //微信好友
+                break;
+            case "WechatMoments":
+                //微信朋友圈
+                break;
+            case "WechatFavorite":
+                //微信收藏
+                break;
+            case "QQ":
+                //QQ好友
+                break;
+            case "QZone":
+                //QQ空间
+                break;
+        }
+    }
 
     @JavascriptInterface
     public void shareFiveParameter(String title, String text, String url, String logourl, String type) {
-        switch (type) {
-            case "微信":
+        switch (type){
+            case "Wechat":
+                //微信好友
                 break;
-            case "微信朋友圈":
+            case "WechatMoments":
+                //微信朋友圈
                 break;
-            case "微信收藏":
+            case "WechatFavorite":
+                //微信收藏
                 break;
             case "QQ":
+                //QQ好友
                 break;
-            case "QQ空间":
+            case "QZone":
+                //QQ空间
                 break;
         }
-
     }
 
     @JavascriptInterface
     public void shareSixParameter(String title, String text, String url, String logourl, String callback, String type) {
-        switch (type) {
-            case "微信":
+        switch (type){
+            case "Wechat":
+                //微信好友
                 break;
-            case "微信朋友圈":
+            case "WechatMoments":
+                //微信朋友圈
                 break;
-            case "微信收藏":
+            case "WechatFavorite":
+                //微信收藏
                 break;
             case "QQ":
+                //QQ好友
                 break;
-            case "QQ空间":
+            case "QZone":
+                //QQ空间
                 break;
         }
-
     }
 
     /**
