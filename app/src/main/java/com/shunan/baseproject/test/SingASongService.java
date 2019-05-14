@@ -9,9 +9,15 @@ import android.os.IBinder;
 import com.orhanobut.logger.Logger;
 import com.shunan.baseproject.R;
 
+import java.io.IOException;
+import java.net.Socket;
+
 public class SingASongService extends Service {
 
     private MediaPlayer mMediaPlayer;
+    public static Socket socket;
+    private VolumeReceiver volumeReceiver;
+
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -24,6 +30,7 @@ public class SingASongService extends Service {
         Logger.d("onCreate");
         mMediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.no_kill);
         mMediaPlayer.setLooping(true);
+
     }
 
     @Override
@@ -35,8 +42,22 @@ public class SingASongService extends Service {
                 startPlaySong();
             }
         }).start();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    socket = new Socket("172.18.2.250", 8888);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+
+        volumeReceiver = new VolumeReceiver();
+        volumeReceiver.init(this);
         return START_STICKY;
     }
+
 
     //开始、暂停播放
     private void startPlaySong() {
@@ -47,15 +68,15 @@ public class SingASongService extends Service {
         } else {
             mMediaPlayer.start();
         }
-        try {
-            Thread.sleep(3000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-        if (mMediaPlayer != null) {
-            mMediaPlayer.pause();
-        }
+//        try {
+//            Thread.sleep(3000);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+//
+//        if (mMediaPlayer != null) {
+//            mMediaPlayer.pause();
+//        }
     }
 
 

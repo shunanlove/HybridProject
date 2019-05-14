@@ -5,10 +5,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.ContentObserver;
 import android.media.AudioManager;
-import android.media.MediaPlayer;
-import android.media.session.MediaSession;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -21,21 +20,15 @@ public class MainActivity extends AppCompatActivity {
 
     private AudioManager mAudioManager;
     private ComponentName mComponent;
-    private MediaSession mSession;
-    private MediaPlayer mMediaPlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Logger.d("onCreate");
         setContentView(R.layout.activity_main);
-//        mMediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.no_kill);
-//        mMediaPlayer.setLooping(true);
-//        mMediaPlayer.start();
 
         startService(new Intent(this, SingASongService.class));
 
-        //获得AudioManager对象
         mAudioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
 
         //构造一个ComponentName，MediaButtonReceiver
@@ -44,15 +37,19 @@ public class MainActivity extends AppCompatActivity {
         //注册一个MediaButtonReceiver广播监听
         mAudioManager.registerMediaButtonEventReceiver(mComponent);
 
+        findViewById(R.id.button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
 
 //        Intent intent = new Intent(MainActivity.this, WebViewJsBridgeActivity.class);
 //        intent.putExtra("url","file:////android_asset/test.html");
 //        startActivity(intent);
 
-
 //        registerVolumeChangeReceiver();
-//        volumeReceiver = new VolumeReceiver();
-//        volumeReceiver.init(this);
     }
 
     @Override

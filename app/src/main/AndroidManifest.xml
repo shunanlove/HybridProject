@@ -3,11 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.shunan.baseproject">
 
-    <!--<uses-permission android:name="android.permission.BLUETOOTH"/>-->
-
-    <!--<uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>-->
-
-    <!-- <uses-permission android:name="android.permission.BLUETOOTH_PRIVILEGED"/>-->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <application
         android:name=".MyApplication"
         android:allowBackup="true"

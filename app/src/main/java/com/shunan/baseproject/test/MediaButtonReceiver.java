@@ -7,10 +7,13 @@ import android.view.KeyEvent;
 
 import com.orhanobut.logger.Logger;
 
+import java.io.IOException;
+import java.io.OutputStream;
+import java.net.Socket;
+
+
 public class MediaButtonReceiver extends BroadcastReceiver {
     private static String TAG = "MediaButtonReceiver";
-    private static long currentTime = 0L;
-    private static int currentKeycode = 0;
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -22,35 +25,72 @@ public class MediaButtonReceiver extends BroadcastReceiver {
             // 获得按键码
             int keycode = event.getKeyCode();
 
-            if (keycode == MediaButtonReceiver.currentKeycode && System.currentTimeMillis() - MediaButtonReceiver.currentTime < 2000) {
+            if (event == null || event.getAction() != KeyEvent.ACTION_UP) {
                 return;
             }
-            MediaButtonReceiver.currentKeycode = keycode;
-            MediaButtonReceiver.currentTime = System.currentTimeMillis();
-
 
             switch (keycode) {
-                case KeyEvent.KEYCODE_MEDIA_NEXT:
-                    //播放下一首
-                    Logger.d("下一首");
-                    break;
                 case KeyEvent.KEYCODE_MEDIA_PREVIOUS:
-                    //播放上一首
-                    Logger.d("上一首");
+                    Logger.d("上键：ToLeft");
+                    sendMsg("ToLeft");
                     break;
-                case KeyEvent.KEYCODE_HEADSETHOOK:
-                    //中间按钮,暂停or播放
-                    //可以通过发送一个新的广播通知正在播放的视频页面,暂停或者播放视频
+                case KeyEvent.KEYCODE_MEDIA_NEXT:
+                    Logger.d("下键：ToRight");
+                    sendMsg("ToRight");
                     break;
                 case KeyEvent.KEYCODE_MEDIA_PLAY:
-                    Logger.d("播放");
-                    break;
                 case KeyEvent.KEYCODE_MEDIA_PAUSE:
-                    Logger.d("暂停");
+                case KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE:
+                case KeyEvent.KEYCODE_HEADSETHOOK:
+                    Logger.d("中键：ToRight");
+                    sendMsg("ToRight");
                     break;
                 default:
                     break;
             }
+        }
+    }
+
+    public static void sendMsg(final String msg) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    //创建客户端Socket，指定服务器的IP地址和端口
+//                    socket = new Socket("172.18.2.250", 8888);
+                    //获取输出流，向服务器发送数据
+                    if (isServerClose(SingASongService.socket)) {
+                        SingASongService.socket = new Socket("172.18.2.250", 8888);
+                    }
+                    OutputStream os = SingASongService.socket.getOutputStream();
+//                                    PrintWriter pw = new PrintWriter(os);
+                    os.write(msg.getBytes());
+                    os.flush();
+                    //关闭输出流
+//                    SingASongService.socket.shutdownOutput();
+//                                    pw.close();
+//                    os.close();
+//                    SingASongService.socket.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }).start();
+    }
+
+    /**
+     * 判断是否断开连接，断开返回true,没有返回false
+     *
+     * @param socket
+     * @return
+     */
+    public static Boolean isServerClose(Socket socket) {
+        try {
+            socket.sendUrgentData(0);//发送1个字节的紧急数据，默认情况下，服务器端没有开启紧急数据处理，不影响正常通信
+            return false;
+        } catch (Exception se) {
+            return true;
         }
     }
 }
