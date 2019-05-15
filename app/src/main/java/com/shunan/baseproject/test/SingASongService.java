@@ -1,5 +1,6 @@
 package com.shunan.baseproject.test;
 
+import android.annotation.SuppressLint;
 import android.app.Service;
 import android.content.Intent;
 import android.media.MediaPlayer;
@@ -33,6 +34,7 @@ public class SingASongService extends Service {
 
     }
 
+    @SuppressLint("InvalidWakeLockTag")
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         Logger.d("onStartCommand");
@@ -46,7 +48,7 @@ public class SingASongService extends Service {
             @Override
             public void run() {
                 try {
-                    socket = new Socket("172.18.2.250", 8888);
+                    socket = new Socket(MediaButtonReceiver.IP, MediaButtonReceiver.PORT);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -64,19 +66,21 @@ public class SingASongService extends Service {
         Logger.d("startPlaySong");
         if (mMediaPlayer == null) {
             mMediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.no_kill);
+            mMediaPlayer.setLooping(true);
             mMediaPlayer.start();
         } else {
+            mMediaPlayer.setLooping(true);
             mMediaPlayer.start();
         }
-//        try {
-//            Thread.sleep(3000);
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
-//
-//        if (mMediaPlayer != null) {
-//            mMediaPlayer.pause();
-//        }
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        if (mMediaPlayer != null) {
+            mMediaPlayer.pause();
+        }
     }
 
 

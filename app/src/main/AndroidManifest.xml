@@ -4,6 +4,9 @@
     package="com.shunan.baseproject">
 
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.DEVICE_POWER" />
+
     <application
         android:name=".MyApplication"
         android:allowBackup="true"

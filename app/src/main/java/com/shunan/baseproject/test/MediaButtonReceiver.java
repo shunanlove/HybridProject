@@ -1,5 +1,6 @@
 package com.shunan.baseproject.test;
 
+import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -14,6 +15,11 @@ import java.net.Socket;
 
 public class MediaButtonReceiver extends BroadcastReceiver {
     private static String TAG = "MediaButtonReceiver";
+    public final static String TO_LEFT = "ToLeft";
+    public final static String TO_RIGHT = "ToRight";
+    public static String IP = "";
+    public static int PORT = 8888;
+
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -28,22 +34,21 @@ public class MediaButtonReceiver extends BroadcastReceiver {
             if (event == null || event.getAction() != KeyEvent.ACTION_UP) {
                 return;
             }
-
             switch (keycode) {
                 case KeyEvent.KEYCODE_MEDIA_PREVIOUS:
                     Logger.d("上键：ToLeft");
-                    sendMsg("ToLeft");
+                    sendMsg(context, TO_LEFT);
                     break;
                 case KeyEvent.KEYCODE_MEDIA_NEXT:
                     Logger.d("下键：ToRight");
-                    sendMsg("ToRight");
+                    sendMsg(context, TO_RIGHT);
                     break;
                 case KeyEvent.KEYCODE_MEDIA_PLAY:
                 case KeyEvent.KEYCODE_MEDIA_PAUSE:
                 case KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE:
                 case KeyEvent.KEYCODE_HEADSETHOOK:
                     Logger.d("中键：ToRight");
-                    sendMsg("ToRight");
+                    sendMsg(context, TO_RIGHT);
                     break;
                 default:
                     break;
@@ -51,7 +56,8 @@ public class MediaButtonReceiver extends BroadcastReceiver {
         }
     }
 
-    public static void sendMsg(final String msg) {
+    @SuppressLint("InvalidWakeLockTag")
+    public static void sendMsg(final Context context, final String msg) {
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -60,7 +66,8 @@ public class MediaButtonReceiver extends BroadcastReceiver {
 //                    socket = new Socket("172.18.2.250", 8888);
                     //获取输出流，向服务器发送数据
                     if (isServerClose(SingASongService.socket)) {
-                        SingASongService.socket = new Socket("172.18.2.250", 8888);
+                        Logger.d("isServerClose");
+                        SingASongService.socket = new Socket(IP, PORT);
                     }
                     OutputStream os = SingASongService.socket.getOutputStream();
 //                                    PrintWriter pw = new PrintWriter(os);
