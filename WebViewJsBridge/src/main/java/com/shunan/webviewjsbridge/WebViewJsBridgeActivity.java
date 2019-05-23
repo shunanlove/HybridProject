@@ -82,21 +82,7 @@ public class WebViewJsBridgeActivity extends AppCompatActivity {
             public void onPageFinished(WebView webView, String s) {
                 super.onPageFinished(webView, s);
             }
-
-            @Override
-            public void onScaleChanged(WebView webView, float v, float v1) {
-                super.onScaleChanged(webView, v, v1);
-                Logger.d(v);
-            }
         });
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            webView.setOnScrollChangeListener(new View.OnScrollChangeListener() {
-                @Override
-                public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-                    Logger.d(scrollY);
-                }
-            });
-        }
 
 
     }
