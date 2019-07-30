@@ -42,17 +42,9 @@ public class MainActivity extends AppCompatActivity {
         Logger.d("onCreate");
         setContentView(R.layout.activity_main);
 
-//        long reTokenTime = System.currentTimeMillis() + (43200 - 60 * 30) * 1000;
-//        System.out.println(new java.text.SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(reTokenTime));
-
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                Intent intent = new Intent(MainActivity.this, WebViewJsBridgeActivity.class);
-                intent.putExtra("url", "file:////android_asset/test.html");
-                startActivity(intent);
-            }
-        }).start();
+        Intent intent = new Intent(MainActivity.this, WebViewJsBridgeActivity.class);
+        intent.putExtra("url", "file:////android_asset/test.html");
+        startActivity(intent);
 //
 //        registerVolumeChangeReceiver();
 
@@ -135,6 +127,7 @@ public class MainActivity extends AppCompatActivity {
             Logger.d("###音量：" + currentVolume + "###");
 //            audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, currentVolume, AudioManager.FLAG_PLAY_SOUND);
         }
+
     }
 
     public void scanQrCode() {
