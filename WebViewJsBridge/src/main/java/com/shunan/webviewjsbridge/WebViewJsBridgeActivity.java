@@ -1,12 +1,10 @@
 package com.shunan.webviewjsbridge;
 
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
-import android.webkit.JavascriptInterface;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -38,20 +36,6 @@ public class WebViewJsBridgeActivity extends AppCompatActivity {
         initWebView();
         webView.loadUrl(extras.getString("url"));
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while (true) {
-                    Logger.d(webView.getScrollY());
-                    try {
-                        Thread.sleep(1000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        }).start();
-
     }
 
     private void initWebView() {
@@ -66,18 +50,11 @@ public class WebViewJsBridgeActivity extends AppCompatActivity {
 //        webSettings.setUserAgent(webSettings.getUserAgentString());
         jsInterface = new JsInterface(this, webView);
         webView.addJavascriptInterface(jsInterface, "JsInterface");
-        webView.addJavascriptInterface(new Object(){
-            @JavascriptInterface
-            public void hello(){
-                System.out.println("");
-            }
-        }, "test");
 
         webSettings.setUserAgentString(webSettings.getUserAgentString()
                 + ";deviceType/Android"
                 + ";VERSION_CODE/" + BuildConfig.VERSION_CODE
-                + ";VERSION_NAME/" + BuildConfig.VERSION_NAME
-                + ";isapp/zyq366app");
+                + ";VERSION_NAME/" + BuildConfig.VERSION_NAME);
 
         webView.setWebViewClient(new WebViewClient() {
             @Override

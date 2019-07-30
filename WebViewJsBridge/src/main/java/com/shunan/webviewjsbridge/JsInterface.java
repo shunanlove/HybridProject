@@ -41,8 +41,7 @@ public class JsInterface {
      */
     @JavascriptInterface
     public void nativeAlert(String mes) {
-        System.out.println(mes);
-//        Toast.makeText(activity, mes, Toast.LENGTH_LONG).show();
+        Toast.makeText(activity, mes, Toast.LENGTH_LONG).show();
     }
 
     /**

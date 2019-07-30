@@ -6,18 +6,6 @@ function scanQrCode(msg)
     document.getElementById("scanQrCode").innerHTML= "3、扫描二维码:"+msg
 }
 
-let obj = {
-        msg:'toast',
-        success:function(){
-
-        }
-}
-
-function test(){
-    native.nativeAlert(obj.stringify());
-}
-
-
 </script>
 <body>
 <h1>测试</h1>
@@ -41,9 +29,6 @@ function test(){
 </div>
 <div style="margin-top:10px">
     <button onclick="native.callPhone('13236903697')">7、拨打电话</button>
-</div>
-<div style="margin-top:10px">
-    <button onclick="native.hello()">test</button>
 </div>
 </body>
 </html>
