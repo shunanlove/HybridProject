@@ -21,6 +21,7 @@ import com.orhanobut.logger.Logger;
 import com.shunan.baseproject.test.MediaButtonReceiver;
 import com.shunan.baseproject.test.SingASongService;
 import com.shunan.webviewjsbridge.ScanActivity;
+import com.shunan.webviewjsbridge.WebViewJsBridgeActivity;
 import com.shunan.webviewjsbridge.listener.MyPermissionListener;
 
 import static com.shunan.webviewjsbridge.JsInterface.REQUEST_CODE_SCAN;
@@ -41,40 +42,48 @@ public class MainActivity extends AppCompatActivity {
         Logger.d("onCreate");
         setContentView(R.layout.activity_main);
 
+//        long reTokenTime = System.currentTimeMillis() + (43200 - 60 * 30) * 1000;
+//        System.out.println(new java.text.SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(reTokenTime));
 
-        findViewById(R.id.btn_scan_conn).setOnClickListener(new View.OnClickListener() {
+        new Thread(new Runnable() {
             @Override
-            public void onClick(View v) {
-                scanQrCode();
+            public void run() {
+                Intent intent = new Intent(MainActivity.this, WebViewJsBridgeActivity.class);
+                intent.putExtra("url", "file:////android_asset/test.html");
+                startActivity(intent);
             }
-        });
-
-        findViewById(R.id.btn_left).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                MediaButtonReceiver.sendMsg(MainActivity.this, MediaButtonReceiver.TO_LEFT);
-            }
-        });
-
-        findViewById(R.id.btn_right).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                MediaButtonReceiver.sendMsg(MainActivity.this, MediaButtonReceiver.TO_RIGHT);
-
-            }
-        });
-
-//        Intent intent = new Intent(MainActivity.this, WebViewJsBridgeActivity.class);
-//        intent.putExtra("url","file:////android_asset/test.html");
-//        startActivity(intent);
-
+        }).start();
+//
 //        registerVolumeChangeReceiver();
 
-//        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
-        PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
-        wl = pm.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK, "My Tag");
-        wl.acquire();
+//        findViewById(R.id.btn_scan_conn).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                scanQrCode();
+//            }
+//        });
+//
+//        findViewById(R.id.btn_left).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                MediaButtonReceiver.sendMsg(MainActivity.this, MediaButtonReceiver.TO_LEFT);
+//            }
+//        });
+//
+//        findViewById(R.id.btn_right).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                MediaButtonReceiver.sendMsg(MainActivity.this, MediaButtonReceiver.TO_RIGHT);
+//
+//            }
+//        });
+
+//        PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
+//        wl = pm.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK, "My Tag");
+//        wl.acquire();
+
+//        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
     }
 
     @Override
@@ -93,6 +102,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private SettingsContentObserver mSettingsContentObserver;
+
 
     private void registerVolumeChangeReceiver() {
         mSettingsContentObserver = new SettingsContentObserver(this, new Handler());

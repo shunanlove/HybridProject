@@ -41,7 +41,8 @@ public class JsInterface {
      */
     @JavascriptInterface
     public void nativeAlert(String mes) {
-        Toast.makeText(activity, mes, Toast.LENGTH_LONG).show();
+        System.out.println(mes);
+//        Toast.makeText(activity, mes, Toast.LENGTH_LONG).show();
     }
 
     /**
@@ -62,7 +63,7 @@ public class JsInterface {
 
     @JavascriptInterface
     public void shareTwoParameter(String url, String type) {
-        switch (type){
+        switch (type) {
             case "Wechat":
                 //微信好友
                 break;
@@ -83,7 +84,7 @@ public class JsInterface {
 
     @JavascriptInterface
     public void shareFourParameter(String title, String text, String url, String type) {
-        switch (type){
+        switch (type) {
             case "Wechat":
                 //微信好友
                 break;
@@ -104,7 +105,7 @@ public class JsInterface {
 
     @JavascriptInterface
     public void shareFiveParameter(String title, String text, String url, String logourl, String type) {
-        switch (type){
+        switch (type) {
             case "Wechat":
                 //微信好友
                 break;
@@ -125,7 +126,7 @@ public class JsInterface {
 
     @JavascriptInterface
     public void shareSixParameter(String title, String text, String url, String logourl, String callback, String type) {
-        switch (type){
+        switch (type) {
             case "Wechat":
                 //微信好友
                 break;

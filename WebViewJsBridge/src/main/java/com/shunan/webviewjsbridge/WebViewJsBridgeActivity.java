@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
+import android.webkit.JavascriptInterface;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -65,6 +66,12 @@ public class WebViewJsBridgeActivity extends AppCompatActivity {
 //        webSettings.setUserAgent(webSettings.getUserAgentString());
         jsInterface = new JsInterface(this, webView);
         webView.addJavascriptInterface(jsInterface, "JsInterface");
+        webView.addJavascriptInterface(new Object(){
+            @JavascriptInterface
+            public void hello(){
+                System.out.println("");
+            }
+        }, "test");
 
         webSettings.setUserAgentString(webSettings.getUserAgentString()
                 + ";deviceType/Android"
