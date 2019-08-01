@@ -2,6 +2,7 @@ package com.shunan.webviewjsbridge;
 
 import android.Manifest;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.net.Uri;
 import android.webkit.JavascriptInterface;
 import android.widget.Toast;
@@ -11,8 +12,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.listener.PermissionGrantedResponse;
 import com.shunan.webviewjsbridge.listener.MyPermissionListener;
+import com.shunan.webviewjsbridge.utils.Glide4Engine;
 import com.shunan.webviewjsbridge.utils.MyUtils;
 import com.tencent.smtt.sdk.WebView;
+import com.zhihu.matisse.Matisse;
+import com.zhihu.matisse.MimeType;
 
 
 public class JsInterface {
@@ -20,6 +24,7 @@ public class JsInterface {
     private AppCompatActivity activity;
     public static final int REQUEST_CODE_SCAN = 400;
     private WebView webView;
+    public static final int REQUEST_CODE_CHOOSE = 23;
 
     public JsInterface(AppCompatActivity activity, WebView webView) {
         this.activity = activity;
@@ -220,7 +225,23 @@ public class JsInterface {
         activity.startActivity(intent);
     }
 
-    public void pictureSelector(){
-
+    @JavascriptInterface
+    public void pictureSelector() {
+        Dexter.withActivity(activity)
+                .withPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                .withListener(new MyPermissionListener(activity, "需要权限，请开启。") {
+                    @Override
+                    public void authorizationSucceeded(PermissionGrantedResponse response) {
+                        Matisse.from(activity)
+                                .choose(MimeType.ofImage())
+                                .countable(true)
+                                .showSingleMediaType(true)
+                                .maxSelectable(9)
+                                .restrictOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)
+                                .thumbnailScale(0.85f)
+                                .imageEngine(new Glide4Engine())
+                                .forResult(REQUEST_CODE_CHOOSE);
+                    }
+                }).check();
     }
 }

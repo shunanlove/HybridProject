@@ -1,6 +1,7 @@
 package com.shunan.webviewjsbridge;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
@@ -12,7 +13,11 @@ import com.orhanobut.logger.Logger;
 import com.tencent.smtt.sdk.WebSettings;
 import com.tencent.smtt.sdk.WebView;
 import com.tencent.smtt.sdk.WebViewClient;
+import com.zhihu.matisse.Matisse;
 
+import java.util.List;
+
+import static com.shunan.webviewjsbridge.JsInterface.REQUEST_CODE_CHOOSE;
 import static com.shunan.webviewjsbridge.JsInterface.REQUEST_CODE_SCAN;
 
 public class WebViewJsBridgeActivity extends AppCompatActivity {
@@ -89,6 +94,8 @@ public class WebViewJsBridgeActivity extends AppCompatActivity {
         return false;
     }
 
+    List<Uri> mSelected;
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -98,6 +105,9 @@ public class WebViewJsBridgeActivity extends AppCompatActivity {
                 String content = data.getStringExtra("result");
                 webView.loadUrl("javascript:scanQrCode('" + content + "')");
             }
+        } else if (requestCode == REQUEST_CODE_CHOOSE && resultCode == RESULT_OK) {
+            mSelected = Matisse.obtainResult(data);
+            Logger.d(mSelected);
         }
     }
 }
