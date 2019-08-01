@@ -219,4 +219,8 @@ public class JsInterface {
         intent.setData(data);
         activity.startActivity(intent);
     }
+
+    public void pictureSelector(){
+
+    }
 }

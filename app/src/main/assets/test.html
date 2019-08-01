@@ -6,6 +6,7 @@ function scanQrCode(msg)
     document.getElementById("scanQrCode").innerHTML= "3、扫描二维码:"+msg
 }
 
+
 </script>
 <body>
 <h1>测试</h1>
@@ -13,7 +14,7 @@ function scanQrCode(msg)
     <button onclick="native.close()">1、关闭页面</button>
 </div>
 <div style="margin-top:10px">
-    <button onclick="native.nativeAlert(obj)">2、弹出Toast</button>
+    <button onclick="native.nativeAlert('测试Toast')">2、弹出Toast</button>
 </div>
 <div style="margin-top:10px">
     <button id="scanQrCode" onclick="native.scanQrCode()">3、扫描二维码</button>
@@ -29,6 +30,9 @@ function scanQrCode(msg)
 </div>
 <div style="margin-top:10px">
     <button onclick="native.callPhone('13236903697')">7、拨打电话</button>
+</div>
+<div style="margin-top:10px">
+    <button onclick="native.callPhone('13236903697')">8、相册选择</button>
 </div>
 </body>
 </html>
