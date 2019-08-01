@@ -8,10 +8,13 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.gson.Gson;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.listener.PermissionGrantedResponse;
 import com.shunan.webviewjsbridge.listener.MyPermissionListener;
+import com.shunan.webviewjsbridge.module.ShareJson;
 import com.shunan.webviewjsbridge.utils.MyUtils;
+import com.shunan.webviewjsbridge.utils.ShareUtils;
 import com.tencent.smtt.sdk.WebView;
 
 
@@ -61,10 +64,12 @@ public class JsInterface {
     }
 
     @JavascriptInterface
-    public void shareTwoParameter(String url, String type) {
-        switch (type){
+    public void shareTwoParameter(String shareJson) {
+        ShareJson mJson = new Gson().fromJson(shareJson, ShareJson.class);
+        switch (mJson.getType()) {
             case "Wechat":
                 //微信好友
+                ShareUtils.showShare(activity, mJson);
                 break;
             case "WechatMoments":
                 //微信朋友圈
@@ -81,68 +86,6 @@ public class JsInterface {
         }
     }
 
-    @JavascriptInterface
-    public void shareFourParameter(String title, String text, String url, String type) {
-        switch (type){
-            case "Wechat":
-                //微信好友
-                break;
-            case "WechatMoments":
-                //微信朋友圈
-                break;
-            case "WechatFavorite":
-                //微信收藏
-                break;
-            case "QQ":
-                //QQ好友
-                break;
-            case "QZone":
-                //QQ空间
-                break;
-        }
-    }
-
-    @JavascriptInterface
-    public void shareFiveParameter(String title, String text, String url, String logourl, String type) {
-        switch (type){
-            case "Wechat":
-                //微信好友
-                break;
-            case "WechatMoments":
-                //微信朋友圈
-                break;
-            case "WechatFavorite":
-                //微信收藏
-                break;
-            case "QQ":
-                //QQ好友
-                break;
-            case "QZone":
-                //QQ空间
-                break;
-        }
-    }
-
-    @JavascriptInterface
-    public void shareSixParameter(String title, String text, String url, String logourl, String callback, String type) {
-        switch (type){
-            case "Wechat":
-                //微信好友
-                break;
-            case "WechatMoments":
-                //微信朋友圈
-                break;
-            case "WechatFavorite":
-                //微信收藏
-                break;
-            case "QQ":
-                //QQ好友
-                break;
-            case "QZone":
-                //QQ空间
-                break;
-        }
-    }
 
     /**
      * 跳转百度地图
@@ -219,4 +162,6 @@ public class JsInterface {
         intent.setData(data);
         activity.startActivity(intent);
     }
+
+
 }
