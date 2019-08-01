@@ -2,21 +2,20 @@ package com.shunan.webviewjsbridge;
 
 import android.Manifest;
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
 import android.net.Uri;
 import android.webkit.JavascriptInterface;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.gson.Gson;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.listener.PermissionGrantedResponse;
 import com.shunan.webviewjsbridge.listener.MyPermissionListener;
-import com.shunan.webviewjsbridge.utils.Glide4Engine;
+import com.shunan.webviewjsbridge.module.ShareJson;
 import com.shunan.webviewjsbridge.utils.MyUtils;
+import com.shunan.webviewjsbridge.utils.ShareUtils;
 import com.tencent.smtt.sdk.WebView;
-import com.zhihu.matisse.Matisse;
-import com.zhihu.matisse.MimeType;
 
 
 public class JsInterface {
@@ -24,7 +23,6 @@ public class JsInterface {
     private AppCompatActivity activity;
     public static final int REQUEST_CODE_SCAN = 400;
     private WebView webView;
-    public static final int REQUEST_CODE_CHOOSE = 23;
 
     public JsInterface(AppCompatActivity activity, WebView webView) {
         this.activity = activity;
@@ -66,10 +64,12 @@ public class JsInterface {
     }
 
     @JavascriptInterface
-    public void shareTwoParameter(String url, String type) {
-        switch (type) {
+    public void shareTwoParameter(String shareJson) {
+        ShareJson mJson = new Gson().fromJson(shareJson, ShareJson.class);
+        switch (mJson.getType()) {
             case "Wechat":
                 //微信好友
+                ShareUtils.showShare(activity, mJson);
                 break;
             case "WechatMoments":
                 //微信朋友圈
@@ -86,68 +86,6 @@ public class JsInterface {
         }
     }
 
-    @JavascriptInterface
-    public void shareFourParameter(String title, String text, String url, String type) {
-        switch (type) {
-            case "Wechat":
-                //微信好友
-                break;
-            case "WechatMoments":
-                //微信朋友圈
-                break;
-            case "WechatFavorite":
-                //微信收藏
-                break;
-            case "QQ":
-                //QQ好友
-                break;
-            case "QZone":
-                //QQ空间
-                break;
-        }
-    }
-
-    @JavascriptInterface
-    public void shareFiveParameter(String title, String text, String url, String logourl, String type) {
-        switch (type) {
-            case "Wechat":
-                //微信好友
-                break;
-            case "WechatMoments":
-                //微信朋友圈
-                break;
-            case "WechatFavorite":
-                //微信收藏
-                break;
-            case "QQ":
-                //QQ好友
-                break;
-            case "QZone":
-                //QQ空间
-                break;
-        }
-    }
-
-    @JavascriptInterface
-    public void shareSixParameter(String title, String text, String url, String logourl, String callback, String type) {
-        switch (type) {
-            case "Wechat":
-                //微信好友
-                break;
-            case "WechatMoments":
-                //微信朋友圈
-                break;
-            case "WechatFavorite":
-                //微信收藏
-                break;
-            case "QQ":
-                //QQ好友
-                break;
-            case "QZone":
-                //QQ空间
-                break;
-        }
-    }
 
     /**
      * 跳转百度地图
@@ -225,23 +163,5 @@ public class JsInterface {
         activity.startActivity(intent);
     }
 
-    @JavascriptInterface
-    public void pictureSelector() {
-        Dexter.withActivity(activity)
-                .withPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                .withListener(new MyPermissionListener(activity, "需要权限，请开启。") {
-                    @Override
-                    public void authorizationSucceeded(PermissionGrantedResponse response) {
-                        Matisse.from(activity)
-                                .choose(MimeType.ofImage())
-                                .countable(true)
-                                .showSingleMediaType(true)
-                                .maxSelectable(9)
-                                .restrictOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)
-                                .thumbnailScale(0.85f)
-                                .imageEngine(new Glide4Engine())
-                                .forResult(REQUEST_CODE_CHOOSE);
-                    }
-                }).check();
-    }
+
 }
