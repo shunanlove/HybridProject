@@ -16,7 +16,6 @@ import com.shunan.webviewjsbridge.listener.MyPermissionListener;
 import com.shunan.webviewjsbridge.module.ShareJson;
 import com.shunan.webviewjsbridge.utils.Glide4Engine;
 import com.shunan.webviewjsbridge.utils.MyUtils;
-import com.shunan.webviewjsbridge.utils.ShareUtils;
 import com.tencent.smtt.sdk.WebView;
 import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
@@ -74,7 +73,7 @@ public class JsInterface {
         switch (mJson.getType()) {
             case "Wechat":
                 //微信好友
-                ShareUtils.showShare(activity, mJson);
+//                ShareUtils.showShare(activity, mJson);
                 break;
             case "WechatMoments":
                 //微信朋友圈
