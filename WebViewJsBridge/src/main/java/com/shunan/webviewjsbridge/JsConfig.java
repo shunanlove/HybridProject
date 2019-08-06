@@ -2,14 +2,14 @@ package com.shunan.webviewjsbridge;
 
 import android.content.Context;
 
+import com.mob.MobSDK;
 import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.Logger;
 import com.tencent.smtt.sdk.QbSdk;
 
 public class JsConfig {
     public static void init(Context context) {
-
-
+        MobSDK.init(context);
         QbSdk.initX5Environment(context, new QbSdk.PreInitCallback() {
             @Override
             public void onCoreInitFinished() {

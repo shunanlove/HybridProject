@@ -1,4 +1,5 @@
 apply plugin: 'com.android.library'
+apply from: '../MobSDK.gradle'
 
 android {
 
@@ -28,15 +29,6 @@ android {
         main {
             jniLibs.srcDir 'libs'
             jni.srcDirs = []
-        }
-    }
-    buildscript {
-        repositories {
-            mavenCentral()
-            google()
-            jcenter()
-        }
-        dependencies {
         }
     }
 }

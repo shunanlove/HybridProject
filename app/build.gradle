@@ -1,5 +1,5 @@
 apply plugin: 'com.android.application'
-apply from: '../MobSDK.gradle'
+apply plugin: 'com.mob.sdk'
 
 android {
     compileSdkVersion 28
