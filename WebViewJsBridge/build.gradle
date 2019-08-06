@@ -37,8 +37,6 @@ android {
             jcenter()
         }
         dependencies {
-            classpath 'com.jakewharton:butterknife-gradle-plugin:10.1.0'
-
         }
     }
 }

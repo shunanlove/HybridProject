@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         Logger.d("onCreate");
         setContentView(R.layout.activity_main);
-
+//        butterknife
         Intent intent = new Intent(MainActivity.this, WebViewJsBridgeActivity.class);
         intent.putExtra("url", "file:////android_asset/test.html");
         startActivity(intent);
