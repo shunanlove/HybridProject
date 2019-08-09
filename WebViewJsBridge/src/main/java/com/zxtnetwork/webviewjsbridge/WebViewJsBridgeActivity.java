@@ -1,4 +1,4 @@
-package com.shunan.webviewjsbridge;
+package com.zxtnetwork.webviewjsbridge;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -17,8 +17,10 @@ import com.zhihu.matisse.Matisse;
 
 import java.util.List;
 
-import static com.shunan.webviewjsbridge.JsInterface.REQUEST_CODE_CHOOSE;
-import static com.shunan.webviewjsbridge.JsInterface.REQUEST_CODE_SCAN;
+import cn.sharesdk.onekeyshare.OnekeyShare;
+
+import static com.zxtnetwork.webviewjsbridge.JsInterface.REQUEST_CODE_CHOOSE;
+import static com.zxtnetwork.webviewjsbridge.JsInterface.REQUEST_CODE_SCAN;
 
 public class WebViewJsBridgeActivity extends AppCompatActivity {
     private static final String OPEN = "open://";
@@ -80,6 +82,7 @@ public class WebViewJsBridgeActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         Logger.d("onResume");
+
     }
 
     @Override

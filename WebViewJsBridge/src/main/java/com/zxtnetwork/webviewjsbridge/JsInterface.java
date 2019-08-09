@@ -1,6 +1,7 @@
-package com.shunan.webviewjsbridge;
+package com.zxtnetwork.webviewjsbridge;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.net.Uri;
@@ -12,23 +13,27 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.gson.Gson;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.listener.PermissionGrantedResponse;
-import com.shunan.webviewjsbridge.listener.MyPermissionListener;
-import com.shunan.webviewjsbridge.module.ShareJson;
-import com.shunan.webviewjsbridge.utils.Glide4Engine;
-import com.shunan.webviewjsbridge.utils.MyUtils;
+import com.zxtnetwork.webviewjsbridge.listener.MyPermissionListener;
+import com.zxtnetwork.webviewjsbridge.module.ShareData;
+import com.zxtnetwork.webviewjsbridge.utils.Glide4Engine;
+import com.zxtnetwork.webviewjsbridge.utils.MyUtils;
+import com.zxtnetwork.webviewjsbridge.utils.ShareUtils;
 import com.tencent.smtt.sdk.WebView;
 import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
 
+import cn.sharesdk.onekeyshare.OnekeyShare;
+import cn.sharesdk.tencent.qq.QQ;
+
 
 public class JsInterface {
     private final int CARMERA_CODE = 112;
-    private AppCompatActivity activity;
+    private Activity activity;
     public static final int REQUEST_CODE_SCAN = 400;
     public static final int REQUEST_CODE_CHOOSE = 500;
     private WebView webView;
 
-    public JsInterface(AppCompatActivity activity, WebView webView) {
+    public JsInterface(Activity activity, WebView webView) {
         this.activity = activity;
         this.webView = webView;
     }
@@ -67,27 +72,39 @@ public class JsInterface {
                 }).check();
     }
 
+    /**
+     * 分享
+     *
+     * @param shareJson
+     */
     @JavascriptInterface
-    public void shareTwoParameter(String shareJson) {
-        ShareJson mJson = new Gson().fromJson(shareJson, ShareJson.class);
-        switch (mJson.getType()) {
-            case "Wechat":
-                //微信好友
+    public void shareParameter(String shareJson) {
+        ShareData mJson = new Gson().fromJson(shareJson, ShareData.class);
+        ShareUtils.showShare(activity, mJson);
+
+
+//        switch (mJson.getType()) {
+//            case "Wechat":
+//                //微信好友
 //                ShareUtils.showShare(activity, mJson);
-                break;
-            case "WechatMoments":
-                //微信朋友圈
-                break;
-            case "WechatFavorite":
-                //微信收藏
-                break;
-            case "QQ":
-                //QQ好友
-                break;
-            case "QZone":
-                //QQ空间
-                break;
-        }
+//                break;
+//            case "WechatMoments":
+//                //微信朋友圈
+//                ShareUtils.showShare(activity, mJson);
+//                break;
+//            case "WechatFavorite":
+//                //微信收藏
+//                ShareUtils.showShare(activity, mJson);
+//                break;
+//            case "QQ":
+//                //QQ好友
+//                ShareUtils.showShare(activity, mJson);
+//                break;
+//            case "QZone":
+//                //QQ空间
+//                ShareUtils.showShare(activity, mJson);
+//                break;
+//        }
     }
 
 

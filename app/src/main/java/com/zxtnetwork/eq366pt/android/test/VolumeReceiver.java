@@ -1,11 +1,10 @@
-package com.shunan.baseproject.test;
+package com.zxtnetwork.eq366pt.android.test;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.media.AudioManager;
-import android.view.KeyEvent;
 
 import com.orhanobut.logger.Logger;
 

@@ -1,4 +1,4 @@
-package com.shunan.baseproject.test;
+package com.zxtnetwork.eq366pt.android.test;
 
 import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;

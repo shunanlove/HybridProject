@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.shunan.baseproject">
+    package="com.zxtnetwork.eq366pt.android">
 
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
@@ -10,7 +10,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
-        android:name=".MyApplication"
+        android:name="com.zxtnetwork.eq366pt.android.MyApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -21,15 +21,15 @@
         tools:ignore="GoogleAppIndexingWarning"
         tools:replace="android:name"
         >
-        <activity android:name=".MainActivity">
+        <activity android:name="com.zxtnetwork.eq366pt.android.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <service android:name=".test.SingASongService" />
-        <receiver android:name=".test.MediaButtonReceiver">
+        <service android:name="com.zxtnetwork.eq366pt.android.test.SingASongService" />
+        <receiver android:name="com.zxtnetwork.eq366pt.android.test.MediaButtonReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.MEDIA_BUTTON" />
             </intent-filter>

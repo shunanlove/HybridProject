@@ -1,8 +1,8 @@
-package com.shunan.baseproject;
+package com.zxtnetwork.eq366pt.android;
 
 import android.app.Application;
 
-import com.shunan.webviewjsbridge.JsConfig;
+import com.zxtnetwork.webviewjsbridge.JsConfig;
 
 public class MyApplication extends Application {
 

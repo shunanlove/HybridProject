@@ -1,18 +1,18 @@
-package com.shunan.webviewjsbridge.module;
+package com.zxtnetwork.webviewjsbridge.module;
 
 /**
  * @Description: java类作用描述
  * @Author: 大魔王老杨
  * @Date: 2019-08-01 11:29
  */
-public class ShareJson {
+public class ShareData {
     private String type;
     private String title;
     private String titleUrl;
     private String text;
     private String  url;
 
-    public ShareJson(String type, String title, String titleUrl, String text,  String url) {
+    public ShareData(String type, String title, String titleUrl, String text, String url) {
         this.type = type;
         this.title = title;
         this.titleUrl = titleUrl;

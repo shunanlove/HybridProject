@@ -1,4 +1,4 @@
-package com.shunan.baseproject.test;
+package com.zxtnetwork.eq366pt.android.test;
 
 import android.annotation.SuppressLint;
 import android.app.Service;
@@ -8,7 +8,7 @@ import android.os.Build;
 import android.os.IBinder;
 
 import com.orhanobut.logger.Logger;
-import com.shunan.baseproject.R;
+import com.zxtnetwork.eq366pt.android.R;
 
 import java.io.IOException;
 import java.net.Socket;

@@ -1,9 +1,21 @@
 <html>
+<script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
 <script language="javascript">
 let native = window.JsInterface;
 function scanQrCode(msg)
 {
     document.getElementById("scanQrCode").innerHTML= "3、扫描二维码:"+msg
+}
+
+function aaa() {
+    var a = {
+        "url": "http://s.caihuimall.net/eq-cms/course/courseDetail/1150934120092798976/1",
+        "type": "1",
+        "title" : "测试分享",
+        "titleUrl" : "http://sharesdk.cn",
+        "text" : "我是分享文本"
+    }
+   return JSON.stringify(a);
 }
 
 
@@ -34,6 +46,10 @@ function scanQrCode(msg)
 </div>
 <div style="margin-top:10px">
     <button onclick="native.pictureSelector()">8、相册选择</button>
+</div>
+
+<div style="margin-top:10px">
+    <button onclick="native.shareParameter(aaa())">9、分享</button>
 </div>
 </body>
 </html>

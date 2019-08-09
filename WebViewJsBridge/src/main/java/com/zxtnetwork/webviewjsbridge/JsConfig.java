@@ -1,4 +1,4 @@
-package com.shunan.webviewjsbridge;
+package com.zxtnetwork.webviewjsbridge;
 
 import android.content.Context;
 

@@ -1,4 +1,4 @@
-package com.shunan.baseproject;
+package com.zxtnetwork.eq366pt.android;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -18,13 +18,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.listener.PermissionGrantedResponse;
 import com.orhanobut.logger.Logger;
-import com.shunan.baseproject.test.MediaButtonReceiver;
-import com.shunan.baseproject.test.SingASongService;
-import com.shunan.webviewjsbridge.ScanActivity;
-import com.shunan.webviewjsbridge.WebViewJsBridgeActivity;
-import com.shunan.webviewjsbridge.listener.MyPermissionListener;
+import com.zxtnetwork.eq366pt.android.test.MediaButtonReceiver;
+import com.zxtnetwork.eq366pt.android.test.SingASongService;
+import com.zxtnetwork.webviewjsbridge.ScanActivity;
+import com.zxtnetwork.webviewjsbridge.WebViewJsBridgeActivity;
+import com.zxtnetwork.webviewjsbridge.listener.MyPermissionListener;
 
-import static com.shunan.webviewjsbridge.JsInterface.REQUEST_CODE_SCAN;
+import static com.zxtnetwork.webviewjsbridge.JsInterface.REQUEST_CODE_SCAN;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -81,6 +81,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+
     }
 
     @Override
