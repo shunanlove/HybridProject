@@ -14,14 +14,18 @@ import com.google.gson.Gson;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
 import com.karumi.dexter.listener.PermissionGrantedResponse;
-import com.shunan.webviewjsbridge.listener.MyPermissionListener;
-import com.shunan.webviewjsbridge.module.ShareJson;
-import com.shunan.webviewjsbridge.utils.Glide4Engine;
-import com.shunan.webviewjsbridge.utils.MyUtils;
+
 import com.tencent.smtt.sdk.WebView;
 import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
 import com.zhihu.matisse.internal.entity.CaptureStrategy;
+import com.zxtnetwork.webviewjsbridge.listener.MyMultiplePermissionListener;
+import com.zxtnetwork.webviewjsbridge.listener.MyPermissionListener;
+import com.zxtnetwork.webviewjsbridge.listener.MyPermissionListener;
+import com.zxtnetwork.webviewjsbridge.module.ShareData;
+import com.zxtnetwork.webviewjsbridge.utils.Glide4Engine;
+import com.zxtnetwork.webviewjsbridge.utils.MyUtils;
+import com.zxtnetwork.webviewjsbridge.utils.ShareUtils;
 
 import cn.sharesdk.onekeyshare.OnekeyShare;
 import cn.sharesdk.tencent.qq.QQ;

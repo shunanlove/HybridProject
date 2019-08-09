@@ -5,6 +5,7 @@ import android.content.Context;
 import com.mob.MobSDK;
 import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.Logger;
+import com.shunan.webviewjsbridge.BuildConfig;
 import com.tencent.smtt.sdk.QbSdk;
 
 public class JsConfig {

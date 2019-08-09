@@ -10,6 +10,8 @@ import android.view.Window;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.orhanobut.logger.Logger;
+import com.shunan.webviewjsbridge.BuildConfig;
+import com.shunan.webviewjsbridge.R;
 import com.tencent.smtt.sdk.WebSettings;
 import com.tencent.smtt.sdk.WebView;
 import com.tencent.smtt.sdk.WebViewClient;
@@ -17,7 +19,6 @@ import com.zhihu.matisse.Matisse;
 
 import java.util.List;
 
-import cn.sharesdk.onekeyshare.OnekeyShare;
 
 import static com.zxtnetwork.webviewjsbridge.JsInterface.REQUEST_CODE_CHOOSE;
 import static com.zxtnetwork.webviewjsbridge.JsInterface.REQUEST_CODE_SCAN;

@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.DecodeHintType;
 import com.orhanobut.logger.Logger;
+import com.shunan.webviewjsbridge.R;
 
 import java.util.ArrayList;
 import java.util.EnumMap;
