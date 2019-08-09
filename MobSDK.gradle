@@ -2,8 +2,8 @@ apply plugin: 'com.mob.sdk'
 
 MobSDK {
 
-    appKey "moba0b0c0d0"
-    appSecret "5713f0d88511f9f4cf100cade0610a34"
+    appKey "2be82b5e933dc"
+    appSecret "1898535b9a1f6702b10ca9c90c8d7c15"
     ShareSDK {
         loopShare true
         devInfo {
