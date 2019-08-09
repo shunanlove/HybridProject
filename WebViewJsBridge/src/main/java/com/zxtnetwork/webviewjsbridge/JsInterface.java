@@ -12,15 +12,16 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.gson.Gson;
 import com.karumi.dexter.Dexter;
+import com.karumi.dexter.MultiplePermissionsReport;
 import com.karumi.dexter.listener.PermissionGrantedResponse;
-import com.zxtnetwork.webviewjsbridge.listener.MyPermissionListener;
-import com.zxtnetwork.webviewjsbridge.module.ShareData;
-import com.zxtnetwork.webviewjsbridge.utils.Glide4Engine;
-import com.zxtnetwork.webviewjsbridge.utils.MyUtils;
-import com.zxtnetwork.webviewjsbridge.utils.ShareUtils;
+import com.shunan.webviewjsbridge.listener.MyPermissionListener;
+import com.shunan.webviewjsbridge.module.ShareJson;
+import com.shunan.webviewjsbridge.utils.Glide4Engine;
+import com.shunan.webviewjsbridge.utils.MyUtils;
 import com.tencent.smtt.sdk.WebView;
 import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
+import com.zhihu.matisse.internal.entity.CaptureStrategy;
 
 import cn.sharesdk.onekeyshare.OnekeyShare;
 import cn.sharesdk.tencent.qq.QQ;
@@ -187,12 +188,15 @@ public class JsInterface {
     @JavascriptInterface
     public void pictureSelector() {
         Dexter.withActivity(activity)
-                .withPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                .withListener(new MyPermissionListener(activity, "需要权限，请开启。") {
+                .withPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA)
+                .withListener(new MyMultiplePermissionListener(activity, "需要权限，请开启。") {
                     @Override
-                    public void authorizationSucceeded(PermissionGrantedResponse response) {
+                    public void authorizationSucceeded(MultiplePermissionsReport report) {
                         Matisse.from(activity)
                                 .choose(MimeType.ofImage())
+                                .capture(true)
+                                .captureStrategy(
+                                        new CaptureStrategy(true, "com.shunan.webviewjsbridge.fileProvider", "JsBridge"))
                                 .countable(true)
                                 .showSingleMediaType(true)
                                 .maxSelectable(9)

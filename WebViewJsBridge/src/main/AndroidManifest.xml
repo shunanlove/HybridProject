@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.zxtnetwork.webviewjsbridge">
+    package="com.shunan.webviewjsbridge">
 
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -14,6 +14,17 @@
         <activity
             android:name="com.zxtnetwork.webviewjsbridge.WebViewJsBridgeActivity"
             android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity android:name=".ScanActivity" />
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.shunan.webviewjsbridge.fileProvider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths_public" />
+        </provider>
         <activity android:name="com.zxtnetwork.webviewjsbridge.ScanActivity" />
 
         <activity
@@ -42,6 +53,5 @@
         </activity>
 
     </application>
-
 
 </manifest>
