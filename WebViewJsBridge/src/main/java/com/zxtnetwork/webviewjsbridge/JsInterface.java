@@ -86,30 +86,6 @@ public class JsInterface {
     public void shareParameter(String shareJson) {
         ShareData mJson = new Gson().fromJson(shareJson, ShareData.class);
         ShareUtils.showShare(activity, mJson);
-
-
-//        switch (mJson.getType()) {
-//            case "Wechat":
-//                //微信好友
-//                ShareUtils.showShare(activity, mJson);
-//                break;
-//            case "WechatMoments":
-//                //微信朋友圈
-//                ShareUtils.showShare(activity, mJson);
-//                break;
-//            case "WechatFavorite":
-//                //微信收藏
-//                ShareUtils.showShare(activity, mJson);
-//                break;
-//            case "QQ":
-//                //QQ好友
-//                ShareUtils.showShare(activity, mJson);
-//                break;
-//            case "QZone":
-//                //QQ空间
-//                ShareUtils.showShare(activity, mJson);
-//                break;
-//        }
     }
 
 
