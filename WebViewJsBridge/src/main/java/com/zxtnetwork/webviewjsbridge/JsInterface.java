@@ -267,7 +267,7 @@ public class JsInterface {
     public void AliPay(String url) {
         //url 服务器签名返回
         //支付宝支付
-        final String authInfo = "app_id=2018010901719642&biz_content=%7B%22out_trade_no%22%3A%221160812710993203200%22%2C%22seller_id%22%3A%222088021477703852%22%2C%22total_amount%22%3A%221.01%22%2C%22subject%22%3A%22app%E6%94%AF%E4%BB%98%22%2C%22body%22%3A%22zyq%22%2C%22store_id%22%3A%22zyq%22%2C%22product_code%22%3A%22QUICK_MSECURITY_PAY%22%7D&charset=utf-8&format=json&method=alipay.trade.app.pay&notify_url=http%3A%2F%2Fs.caihuimall.net%2Fpayment%2Fnotifyap&sign_type=RSA2&timestamp=2019-08-12%2015%3A18%3A16&version=1.0&sign=KDLHLo0zD4BQPkGQwrKQ4zC%2Bv4Esyozng23EtiLbxsWdHTLCBaYqr6P8t6CmQ1OpcSP8poye3OK4xBlDlx0bM%2FR8cU0v1oxbs3X5lVbhrSy1fLi0lbLC%2Ff4LoOsrvcOk%2FVurNff6CsC1IxNwSezxbx9WUoVlMmLbI8Yr0qAgdcFqyREHHtKy%2Byg6ndG6zM1odCCf%2FsoRHmClPFX5CiCg0hJcVKzdsZw%2BrWrPJDS4jCRq5AqI40hThX%2B2Ga8EsUV%2FJPJfnbabVq8DkF86cgBwHCSGVkBAxi3cLMWrMYE7GExYdv5ofE8RXlvZ8LbA6BjJCjSi1kH4CdFMdh92D2tPbg%3D%3D";//请求接口签名后返回的数据
+        final String authInfo = url;
         Runnable authRunnable = () -> {
             // 构造AuthTask 对象
             AuthTask authTask = new AuthTask(activity);
