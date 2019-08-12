@@ -1,4 +1,4 @@
-package com.zxtnetwork.webviewjsbridge.wxapi;
+package com.zxtnetwork.eq366pt.android.wxapi;
 
 
 import android.app.AlertDialog;

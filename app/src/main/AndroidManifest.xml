@@ -19,8 +19,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning"
-        tools:replace="android:name"
-        >
+        tools:replace="android:name">
         <activity android:name="com.zxtnetwork.eq366pt.android.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -28,6 +27,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".wxapi.WXPayEntryActivity"
+            android:exported="true"
+            android:launchMode="singleTop" />
+
         <service android:name="com.zxtnetwork.eq366pt.android.test.SingASongService" />
         <receiver android:name="com.zxtnetwork.eq366pt.android.test.MediaButtonReceiver">
             <intent-filter>

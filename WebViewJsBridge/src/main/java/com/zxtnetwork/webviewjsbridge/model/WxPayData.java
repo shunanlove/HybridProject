@@ -1,5 +1,5 @@
 package com.zxtnetwork.webviewjsbridge.model;
-
+//{"appid":"wxb4ba3c02aa476ea1","partnerid":"1900006771","package":"Sign=WXPay","noncestr":"e5326e5ddda86ffa9950c34c7d6283d2","timestamp":1565581291,"prepayid":"wx12114131560278fa276d35bb1647623532","sign":"B7B2242FBDDDBA75144761FC5029AE9A"}
 public class WxPayData {
 
     private String appId;
