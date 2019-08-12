@@ -8,27 +8,30 @@ import android.net.Uri;
 import android.webkit.JavascriptInterface;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import com.google.gson.Gson;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
 import com.karumi.dexter.listener.PermissionGrantedResponse;
-
+import com.tencent.mm.opensdk.modelpay.PayReq;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import com.tencent.smtt.sdk.WebView;
 import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
 import com.zhihu.matisse.internal.entity.CaptureStrategy;
 import com.zxtnetwork.webviewjsbridge.listener.MyMultiplePermissionListener;
 import com.zxtnetwork.webviewjsbridge.listener.MyPermissionListener;
-import com.zxtnetwork.webviewjsbridge.listener.MyPermissionListener;
-import com.zxtnetwork.webviewjsbridge.module.ShareData;
+import com.zxtnetwork.webviewjsbridge.model.NameValuePair;
+import com.zxtnetwork.webviewjsbridge.model.ShareData;
+import com.zxtnetwork.webviewjsbridge.model.WxPayData;
 import com.zxtnetwork.webviewjsbridge.utils.Glide4Engine;
+import com.zxtnetwork.webviewjsbridge.utils.MD5;
 import com.zxtnetwork.webviewjsbridge.utils.MyUtils;
 import com.zxtnetwork.webviewjsbridge.utils.ShareUtils;
 
-import cn.sharesdk.onekeyshare.OnekeyShare;
-import cn.sharesdk.tencent.qq.QQ;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Random;
 
 
 public class JsInterface {
@@ -188,4 +191,38 @@ public class JsInterface {
                 }).check();
     }
 
+    @JavascriptInterface
+    public void wxPay(String json) {
+        WxPayData wxPayData = new Gson().fromJson(json, WxPayData.class);
+        Constants.APP_ID = wxPayData.getAppId();
+        PayReq req = new PayReq();
+        req.appId = wxPayData.getAppId();
+        req.partnerId = wxPayData.getMchId();
+        req.prepayId = wxPayData.getPrepayId();
+        req.packageValue = "Sign=WXPay";
+        req.nonceStr = MD5.getMessageDigest(String.valueOf(new Random().nextInt(10000)).getBytes());
+        req.timeStamp = String.valueOf(System.currentTimeMillis() / 1000);
+
+        List<NameValuePair> signParams = new LinkedList<>();
+        signParams.add(new NameValuePair("appid", req.appId));
+        signParams.add(new NameValuePair("noncestr", req.nonceStr));
+        signParams.add(new NameValuePair("package", req.packageValue));
+        signParams.add(new NameValuePair("partnerid", req.partnerId));
+        signParams.add(new NameValuePair("prepayid", req.prepayId));
+        signParams.add(new NameValuePair("timestamp", req.timeStamp));
+        StringBuilder sb = new StringBuilder();
+
+        for (int i = 0; i < signParams.size(); i++) {
+            sb.append(signParams.get(i).getName());
+            sb.append('=');
+            sb.append(signParams.get(i).getValue());
+            sb.append('&');
+        }
+        sb.append("key=");
+        sb.append(wxPayData.getApiKey());
+        req.sign = MD5.getMessageDigest(sb.toString().getBytes());
+        IWXAPI msgApi = WXAPIFactory.createWXAPI(activity, null);
+        msgApi.registerApp(wxPayData.getAppId());
+        msgApi.sendReq(req);
+    }
 }

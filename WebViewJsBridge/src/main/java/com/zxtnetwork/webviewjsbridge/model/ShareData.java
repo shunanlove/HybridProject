@@ -1,4 +1,4 @@
-package com.zxtnetwork.webviewjsbridge.module;
+package com.zxtnetwork.webviewjsbridge.model;
 
 /**
  * @Description: java类作用描述

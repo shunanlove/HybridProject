@@ -2,7 +2,7 @@ package com.zxtnetwork.webviewjsbridge.utils;
 
 import android.content.Context;
 
-import com.zxtnetwork.webviewjsbridge.module.ShareData;
+import com.zxtnetwork.webviewjsbridge.model.ShareData;
 
 import cn.sharesdk.onekeyshare.OnekeyShare;
 

@@ -18,6 +18,15 @@ function aaa() {
    return JSON.stringify(a);
 }
 
+function getPayData() {
+    var data = {
+        "appId": "wx53baadf2f02263df",
+        "mchId": "1492917752",
+        "apiKey" : "5acf3bfd512c4064b8ff95e1cec64e5f",
+        "prepayId" : "wx1215152688400438d428a05b1871351900"
+    }
+   return JSON.stringify(data);
+}
 
 
 </script>
@@ -50,6 +59,9 @@ function aaa() {
 
 <div style="margin-top:10px">
     <button onclick="native.shareParameter(aaa())">9、分享</button>
+</div>
+<div style="margin-top:10px">
+    <button onclick="native.wxPay(getPayData())">10、微信支付</button>
 </div>
 </body>
 </html>
