@@ -25,7 +25,12 @@ android {
         }
     }
 }
+repositories {
+    flatDir {
+        dirs 'libs'
+    }
 
+}
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'androidx.appcompat:appcompat:1.0.2'
@@ -41,6 +46,8 @@ dependencies {
     implementation 'com.github.bumptech.glide:glide:4.9.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.9.0'
     api 'com.google.code.gson:gson:2.8.5'
+    //支付宝SDK
+    api(name: 'alipaySdk-15.6.5-20190718211159-noUtdid', ext: 'aar')
     api 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:+'
 
 

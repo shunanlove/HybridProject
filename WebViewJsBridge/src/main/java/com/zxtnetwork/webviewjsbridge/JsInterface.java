@@ -1,13 +1,20 @@
 package com.zxtnetwork.webviewjsbridge;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.net.Uri;
+import android.os.Handler;
+import android.os.Message;
+import android.text.TextUtils;
+import android.util.Log;
 import android.webkit.JavascriptInterface;
 import android.widget.Toast;
 
+
+import com.alipay.sdk.app.AuthTask;
 import com.google.gson.Gson;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
@@ -15,12 +22,14 @@ import com.karumi.dexter.listener.PermissionGrantedResponse;
 import com.tencent.mm.opensdk.modelpay.PayReq;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
+
 import com.tencent.smtt.sdk.WebView;
 import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
 import com.zhihu.matisse.internal.entity.CaptureStrategy;
 import com.zxtnetwork.webviewjsbridge.listener.MyMultiplePermissionListener;
 import com.zxtnetwork.webviewjsbridge.listener.MyPermissionListener;
+import com.zxtnetwork.webviewjsbridge.module.PayResult;
 import com.zxtnetwork.webviewjsbridge.model.NameValuePair;
 import com.zxtnetwork.webviewjsbridge.model.ShareData;
 import com.zxtnetwork.webviewjsbridge.model.WxPayData;
@@ -29,6 +38,7 @@ import com.zxtnetwork.webviewjsbridge.utils.MD5;
 import com.zxtnetwork.webviewjsbridge.utils.MyUtils;
 import com.zxtnetwork.webviewjsbridge.utils.ShareUtils;
 
+import java.util.Map;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
@@ -40,6 +50,33 @@ public class JsInterface {
     public static final int REQUEST_CODE_SCAN = 400;
     public static final int REQUEST_CODE_CHOOSE = 500;
     private WebView webView;
+    private static final int PAY = 100;
+    @SuppressLint("HandlerLeak")
+    private Handler mHandler = new Handler() {
+        @SuppressWarnings("unused")
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case PAY: {
+                    @SuppressWarnings("unchecked")
+                    PayResult payResult = new PayResult((Map<String, String>) msg.obj);
+                    /**
+                     * 对于支付结果，请商户依赖服务端的异步通知结果。同步通知结果，仅作为支付结束的通知。
+                     */
+                    String resultInfo = payResult.getResult();// 同步返回需要验证的信息
+                    String resultStatus = payResult.getResultStatus();
+                    // 判断resultStatus 为9000则代表支付成功
+                    if (TextUtils.equals(resultStatus, "9000")) {
+                        // 该笔订单是否真实支付成功，需要依赖服务端的异步通知。
+                        //请求接口查询支付状态
+                        Log.d("JsInterface", resultInfo);
+                    }
+                    break;
+                }
+                default:
+                    break;
+            }
+        }
+    };
 
     public JsInterface(Activity activity, WebView webView) {
         this.activity = activity;
@@ -225,4 +262,25 @@ public class JsInterface {
         msgApi.registerApp(wxPayData.getAppId());
         msgApi.sendReq(req);
     }
+
+    @JavascriptInterface
+    public void AliPay(String url) {
+        //url 服务器签名返回
+        //支付宝支付
+        final String authInfo = "app_id=2018010901719642&biz_content=%7B%22out_trade_no%22%3A%221160812710993203200%22%2C%22seller_id%22%3A%222088021477703852%22%2C%22total_amount%22%3A%221.01%22%2C%22subject%22%3A%22app%E6%94%AF%E4%BB%98%22%2C%22body%22%3A%22zyq%22%2C%22store_id%22%3A%22zyq%22%2C%22product_code%22%3A%22QUICK_MSECURITY_PAY%22%7D&charset=utf-8&format=json&method=alipay.trade.app.pay&notify_url=http%3A%2F%2Fs.caihuimall.net%2Fpayment%2Fnotifyap&sign_type=RSA2&timestamp=2019-08-12%2015%3A18%3A16&version=1.0&sign=KDLHLo0zD4BQPkGQwrKQ4zC%2Bv4Esyozng23EtiLbxsWdHTLCBaYqr6P8t6CmQ1OpcSP8poye3OK4xBlDlx0bM%2FR8cU0v1oxbs3X5lVbhrSy1fLi0lbLC%2Ff4LoOsrvcOk%2FVurNff6CsC1IxNwSezxbx9WUoVlMmLbI8Yr0qAgdcFqyREHHtKy%2Byg6ndG6zM1odCCf%2FsoRHmClPFX5CiCg0hJcVKzdsZw%2BrWrPJDS4jCRq5AqI40hThX%2B2Ga8EsUV%2FJPJfnbabVq8DkF86cgBwHCSGVkBAxi3cLMWrMYE7GExYdv5ofE8RXlvZ8LbA6BjJCjSi1kH4CdFMdh92D2tPbg%3D%3D";//请求接口签名后返回的数据
+        Runnable authRunnable = () -> {
+            // 构造AuthTask 对象
+            AuthTask authTask = new AuthTask(activity);
+            // 调用授权接口，获取授权结果
+            Map<String, String> result = authTask.authV2(authInfo, true);
+            Message msg = new Message();
+            msg.what = PAY;
+            msg.obj = result;
+            mHandler.sendMessage(msg);
+        };
+        // 必须异步调用
+        Thread authThread = new Thread(authRunnable);
+        authThread.start();
+    }
+
 }

@@ -35,6 +35,18 @@ android {
             signingConfig signingConfigs.debug
         }
     }
+    compileOptions {
+
+        sourceCompatibility JavaVersion.VERSION_1_8
+
+        targetCompatibility JavaVersion.VERSION_1_8
+
+    }
+}
+repositories {
+    flatDir {
+        dirs project(':WebViewJsBridge').file('libs')
+    }
 }
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
