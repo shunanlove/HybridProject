@@ -43,18 +43,21 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 //        butterknife
         Intent intent = new Intent(MainActivity.this, WebViewJsBridgeActivity.class);
-        intent.putExtra("url", "file:////android_asset/test.html");
-        startActivity(intent);
+//        intent.putExtra("url", "file:////android_asset/test.html");
+        intent.putExtra("url", "http://172.18.2.250:4200");
+//        intent.putExtra("url", "http://www.baidu.com");
+
 //
 //        registerVolumeChangeReceiver();
 
 
-//        findViewById(R.id.btn_scan_conn).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
+        findViewById(R.id.btn_scan_conn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 //                scanQrCode();
-//            }
-//        });
+                startActivity(intent);
+            }
+        });
 //
 //        findViewById(R.id.btn_left).setOnClickListener(new View.OnClickListener() {
 //            @Override

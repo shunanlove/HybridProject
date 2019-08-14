@@ -2,6 +2,7 @@ package com.zxtnetwork.webviewjsbridge;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
@@ -55,6 +56,10 @@ public class WebViewJsBridgeActivity extends AppCompatActivity {
         webSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NARROW_COLUMNS);//适应屏幕，内容将自动缩放
         webSettings.setUseWideViewPort(false);//这里需要设置为true，才能让Webivew支持<meta>标签的viewport属性
         webSettings.setDatabaseEnabled(false);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            webView.setWebContentsDebuggingEnabled(true);
+        }
 //        webSettings.setUserAgent(webSettings.getUserAgentString());
         jsInterface = new JsInterface(this, webView);
         webView.addJavascriptInterface(jsInterface, "JsInterface");
@@ -107,7 +112,7 @@ public class WebViewJsBridgeActivity extends AppCompatActivity {
         if (requestCode == REQUEST_CODE_SCAN && resultCode == RESULT_OK) {
             if (data != null) {
                 String content = data.getStringExtra("result");
-                webView.loadUrl("javascript:scanQrCode('" + content + "')");
+                webView.loadUrl("javascript:scanQrCode_CallBack('" + content + "')");
             }
         } else if (requestCode == REQUEST_CODE_CHOOSE && resultCode == RESULT_OK) {
             mSelected = Matisse.obtainResult(data);
