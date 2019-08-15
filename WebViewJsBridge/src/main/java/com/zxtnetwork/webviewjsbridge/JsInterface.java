@@ -13,7 +13,6 @@ import android.util.Log;
 import android.webkit.JavascriptInterface;
 import android.widget.Toast;
 
-
 import com.alipay.sdk.app.AuthTask;
 import com.google.gson.Gson;
 import com.karumi.dexter.Dexter;
@@ -22,26 +21,29 @@ import com.karumi.dexter.listener.PermissionGrantedResponse;
 import com.tencent.mm.opensdk.modelpay.PayReq;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
-
 import com.tencent.smtt.sdk.WebView;
 import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
 import com.zhihu.matisse.internal.entity.CaptureStrategy;
 import com.zxtnetwork.webviewjsbridge.listener.MyMultiplePermissionListener;
 import com.zxtnetwork.webviewjsbridge.listener.MyPermissionListener;
-import com.zxtnetwork.webviewjsbridge.module.PayResult;
 import com.zxtnetwork.webviewjsbridge.model.NameValuePair;
 import com.zxtnetwork.webviewjsbridge.model.ShareData;
 import com.zxtnetwork.webviewjsbridge.model.WxPayData;
+import com.zxtnetwork.webviewjsbridge.module.PayResult;
 import com.zxtnetwork.webviewjsbridge.utils.Glide4Engine;
 import com.zxtnetwork.webviewjsbridge.utils.MD5;
 import com.zxtnetwork.webviewjsbridge.utils.MyUtils;
-import com.zxtnetwork.webviewjsbridge.utils.ShareUtils;
 
-import java.util.Map;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
+
+import cn.sharesdk.framework.Platform;
+import cn.sharesdk.framework.PlatformActionListener;
+import cn.sharesdk.onekeyshare.OnekeyShare;
 
 
 public class JsInterface {
@@ -125,7 +127,13 @@ public class JsInterface {
     @JavascriptInterface
     public void shareParameter(String shareJson) {
         ShareData mJson = new Gson().fromJson(shareJson, ShareData.class);
-        ShareUtils.showShare(activity, mJson);
+        activity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+
+                showShare(mJson);
+            }
+        });
     }
 
 
@@ -281,6 +289,64 @@ public class JsInterface {
         // 必须异步调用
         Thread authThread = new Thread(authRunnable);
         authThread.start();
+    }
+
+
+    /**
+     * 分享方法
+     */
+    public void showShare(ShareData shareData) {
+        final OnekeyShare oks = new OnekeyShare();
+        //关闭sso授权
+        oks.disableSSOWhenAuthorize();
+        // title标题，印象笔记、邮箱、信息、微信、人人网和QQ空间使用
+        oks.setTitle(shareData.getTitle());
+        // titleUrl是标题的网络链接，仅在Linked-in,QQ和QQ空间使用
+        oks.setTitleUrl(shareData.getTitleUrl());
+        // url仅在微信（包括好友和朋友圈）中使用
+        oks.setUrl(shareData.getUrl());
+        // text是分享文本，所有平台都需要这个字段
+        oks.setText(shareData.getText());
+        //分享回调
+        oks.setCallback(new PlatformActionListener() {
+            @Override
+            public void onComplete(Platform platform, int i, HashMap<String, Object> hashMap) {
+                System.out.println("###############");
+            }
+
+            @Override
+            public void onError(Platform platform, int i, Throwable throwable) {
+                System.out.println("###############");
+            }
+
+            @Override
+            public void onCancel(Platform platform, int i) {
+                System.out.println("###############");
+            }
+        });
+        //启动分享
+        oks.show(activity);
+    }
+
+    /**
+     * 分享回调
+     */
+    class ShareCallback implements PlatformActionListener {
+
+        @Override
+        public void onComplete(Platform platform, int i, HashMap<String, Object> hashMap) {
+            //成功
+        }
+
+        @Override
+        public void onError(Platform platform, int i, Throwable throwable) {
+            //失败
+        }
+
+        @Override
+        public void onCancel(Platform platform, int i) {
+            //关闭
+        }
     }
 
 }
