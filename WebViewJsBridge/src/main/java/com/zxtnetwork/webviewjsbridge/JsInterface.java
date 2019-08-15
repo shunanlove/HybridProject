@@ -305,7 +305,22 @@ public class JsInterface {
         // text是分享文本，所有平台都需要这个字段
         oks.setText(shareData.getText());
         //分享回调
-        oks.setCallback(new ShareCallback());
+        oks.setCallback(new PlatformActionListener() {
+            @Override
+            public void onComplete(Platform platform, int i, HashMap<String, Object> hashMap) {
+
+            }
+
+            @Override
+            public void onError(Platform platform, int i, Throwable throwable) {
+
+            }
+
+            @Override
+            public void onCancel(Platform platform, int i) {
+
+            }
+        });
         //启动分享
         oks.show(activity);
     }

@@ -10,6 +10,7 @@ import android.view.Window;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.gson.Gson;
 import com.orhanobut.logger.Logger;
 import com.shunan.webviewjsbridge.BuildConfig;
 import com.shunan.webviewjsbridge.R;
@@ -18,8 +19,8 @@ import com.tencent.smtt.sdk.WebView;
 import com.tencent.smtt.sdk.WebViewClient;
 import com.zhihu.matisse.Matisse;
 
+import java.util.ArrayList;
 import java.util.List;
-
 
 import static com.zxtnetwork.webviewjsbridge.JsInterface.REQUEST_CODE_CHOOSE;
 import static com.zxtnetwork.webviewjsbridge.JsInterface.REQUEST_CODE_SCAN;
@@ -112,11 +113,15 @@ public class WebViewJsBridgeActivity extends AppCompatActivity {
         if (requestCode == REQUEST_CODE_SCAN && resultCode == RESULT_OK) {
             if (data != null) {
                 String content = data.getStringExtra("result");
-                webView.loadUrl("javascript:scanQrCode_CallBack('" + content + "')");
+                webView.loadUrl("javascript:scanQrCode_callBack('" + content + "')");
             }
         } else if (requestCode == REQUEST_CODE_CHOOSE && resultCode == RESULT_OK) {
             mSelected = Matisse.obtainResult(data);
-            Logger.d(mSelected);
+            ArrayList<String> resList = new ArrayList<>();
+            for (Uri uri : mSelected) {
+                resList.add(uri.toString());
+            }
+            webView.loadUrl("javascript:pictureSelector_callBack('" + new Gson().toJson(resList) + "')");
         }
     }
 }
