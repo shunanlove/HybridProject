@@ -11,15 +11,24 @@ public class ShareData {
     private String titleUrl;
     private String text;
     private String  url;
+    private String imageUrl;
 
-    public ShareData(String type, String title, String titleUrl, String text, String url) {
+    public ShareData(String type, String title, String titleUrl, String text, String url,String imageUrl) {
         this.type = type;
         this.title = title;
         this.titleUrl = titleUrl;
         this.text = text;
         this.url = url;
+        this.imageUrl = imageUrl;
     }
 
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
 
     public String getTitle() {
         return title;
