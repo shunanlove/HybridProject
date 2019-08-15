@@ -15,6 +15,9 @@ import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.IWXAPIEventHandler;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import com.zxtnetwork.webviewjsbridge.Constants;
+import com.zxtnetwork.webviewjsbridge.event.MessageEvent;
+
+import org.greenrobot.eventbus.EventBus;
 
 
 public class WXPayEntryActivity extends AppCompatActivity implements IWXAPIEventHandler {
@@ -44,10 +47,8 @@ public class WXPayEntryActivity extends AppCompatActivity implements IWXAPIEvent
     @Override
     public void onResp(BaseResp resp) {
         if (resp.getType() == ConstantsAPI.COMMAND_PAY_BY_WX) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setTitle(R.string.app_tip);
-            builder.setMessage(getString(R.string.pay_result_callback_msg, String.valueOf(resp.errCode)));
-            builder.show();
+            EventBus.getDefault().post(new MessageEvent(resp.errCode));
+            finish();
         }
 //        int code = resp.errCode;
 //        if (code == 0) {

@@ -3,7 +3,6 @@ package com.zxtnetwork.webviewjsbridge;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.net.Uri;
@@ -26,6 +25,7 @@ import com.tencent.smtt.sdk.WebView;
 import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
 import com.zhihu.matisse.internal.entity.CaptureStrategy;
+import com.zxtnetwork.webviewjsbridge.event.MessageEvent;
 import com.zxtnetwork.webviewjsbridge.listener.MyMultiplePermissionListener;
 import com.zxtnetwork.webviewjsbridge.listener.MyPermissionListener;
 import com.zxtnetwork.webviewjsbridge.model.NameValuePair;
@@ -36,6 +36,10 @@ import com.zxtnetwork.webviewjsbridge.utils.Glide4Engine;
 import com.zxtnetwork.webviewjsbridge.utils.MD5;
 import com.zxtnetwork.webviewjsbridge.utils.MyUtils;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -45,6 +49,7 @@ import java.util.Random;
 import cn.sharesdk.framework.Platform;
 import cn.sharesdk.framework.PlatformActionListener;
 import cn.sharesdk.onekeyshare.OnekeyShare;
+import cn.sharesdk.wechat.friends.Wechat;
 
 
 public class JsInterface {
@@ -67,12 +72,15 @@ public class JsInterface {
                      */
                     String resultInfo = payResult.getResult();// 同步返回需要验证的信息
                     String resultStatus = payResult.getResultStatus();
+                    webView.loadUrl("javascript:aliPay_callBack('" + resultStatus + "')");
                     // 判断resultStatus 为9000则代表支付成功
-                    if (TextUtils.equals(resultStatus, "9000")) {
-                        // 该笔订单是否真实支付成功，需要依赖服务端的异步通知。
-                        //请求接口查询支付状态
-                        Log.d("JsInterface", resultInfo);
-                    }
+//                    if (TextUtils.equals(resultStatus, "9000")) {
+//                        // 该笔订单是否真实支付成功，需要依赖服务端的异步通知。
+//                        //请求接口查询支付状态
+//
+//                    } else {
+//
+//                    }
                     break;
                 }
                 default:
@@ -233,6 +241,7 @@ public class JsInterface {
 
     @JavascriptInterface
     public void wxPay(String json) {
+        EventBus.getDefault().register(this);
         WxPayData wxPayData = new Gson().fromJson(json, WxPayData.class);
         Constants.APP_ID = wxPayData.getAppId();
         PayReq req = new PayReq();
@@ -266,6 +275,15 @@ public class JsInterface {
         msgApi.sendReq(req);
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(MessageEvent event) {
+        EventBus.getDefault().unregister(this);
+//        0	    成功	展示成功页面
+//        -1	错误	可能的原因：签名错误、未注册APPID、项目设置APPID不正确、注册的APPID与设置的不匹配、其他异常等。
+//        -2	用户取消	无需处理。发生场景：用户不支付了，点击取消，返回APP。
+        webView.loadUrl("javascript:wxPay_callBack('" + event.getRespErrCode() + "')");
+    }
+
     /**
      * 支付宝支付
      *
@@ -297,6 +315,7 @@ public class JsInterface {
      */
     public void showShare(ShareData shareData) {
         OnekeyShare oks = new OnekeyShare();
+        oks.setPlatform(Wechat.NAME);
         //关闭sso授权
         oks.disableSSOWhenAuthorize();
         // title标题，印象笔记、邮箱、信息、微信、人人网和QQ空间使用
