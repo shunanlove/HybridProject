@@ -3,6 +3,7 @@ package com.zxtnetwork.webviewjsbridge;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.net.Uri;
@@ -127,13 +128,7 @@ public class JsInterface {
     @JavascriptInterface
     public void shareParameter(String shareJson) {
         ShareData mJson = new Gson().fromJson(shareJson, ShareData.class);
-        activity.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-
-                showShare(mJson);
-            }
-        });
+        showShare(mJson);
     }
 
 
@@ -271,6 +266,11 @@ public class JsInterface {
         msgApi.sendReq(req);
     }
 
+    /**
+     * 支付宝支付
+     *
+     * @param url
+     */
     @JavascriptInterface
     public void AliPay(String url) {
         //url 服务器签名返回
@@ -296,7 +296,7 @@ public class JsInterface {
      * 分享方法
      */
     public void showShare(ShareData shareData) {
-        final OnekeyShare oks = new OnekeyShare();
+        OnekeyShare oks = new OnekeyShare();
         //关闭sso授权
         oks.disableSSOWhenAuthorize();
         // title标题，印象笔记、邮箱、信息、微信、人人网和QQ空间使用
@@ -307,23 +307,10 @@ public class JsInterface {
         oks.setUrl(shareData.getUrl());
         // text是分享文本，所有平台都需要这个字段
         oks.setText(shareData.getText());
+        //分享网络图片
+        oks.setImageUrl(shareData.getImageUrl());
         //分享回调
-        oks.setCallback(new PlatformActionListener() {
-            @Override
-            public void onComplete(Platform platform, int i, HashMap<String, Object> hashMap) {
-                System.out.println("###############");
-            }
-
-            @Override
-            public void onError(Platform platform, int i, Throwable throwable) {
-                System.out.println("###############");
-            }
-
-            @Override
-            public void onCancel(Platform platform, int i) {
-                System.out.println("###############");
-            }
-        });
+        oks.setCallback(new ShareCallback());
         //启动分享
         oks.show(activity);
     }
@@ -336,16 +323,19 @@ public class JsInterface {
         @Override
         public void onComplete(Platform platform, int i, HashMap<String, Object> hashMap) {
             //成功
+            Log.d("ShareCallback", "分享成功");
         }
 
         @Override
         public void onError(Platform platform, int i, Throwable throwable) {
             //失败
+            Log.d("ShareCallback", "分享失败");
         }
 
         @Override
         public void onCancel(Platform platform, int i) {
             //关闭
+            Log.d("ShareCallback", "分享关闭");
         }
     }
 
