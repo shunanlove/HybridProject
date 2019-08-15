@@ -1,31 +1,6 @@
 <!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center; margin-top:10px">
-    <button style="width:80%" (click)="close()">1、关闭页面</button>
+<div style="text-align:center">
+    <button (click)="scanQrCode()">二维码扫描</button>
 </div>
-<div style="text-align:center; margin-top:10px">
-    <button style="width:80%" (click)="nativeAlert('测试Toast')">2、弹出Toast</button>
-</div>
-<div style="text-align:center; margin-top:10px">
-    <button style="width:80%" (click)="scanQrCode()">3、扫描二维码</button>
-</div>
-<div style="text-align:center; margin-top:10px">
-    <button style="width:80%" (click)="goToBaiduMap('38.861318','121.533141','高新万达')">4、百度导航</button>
-</div>
-<div style="text-align:center; margin-top:10px">
-    <button style="width:80%" (click)="goToGaodeMap('38.861318','121.533141','高新万达')">5、高德导航</button>
-</div>
-<div style="text-align:center; margin-top:10px">
-    <button style="width:80%" (click)="goToTencentMap('38.861318','121.533141','高新万达')">6、腾讯导航</button>
-</div>
-<div style="text-align:center; margin-top:10px">
-    <button style="width:80%" (click)="callPhone('13236903697')">7、拨打电话</button>
-</div>
-<div style="text-align:center; margin-top:10px">
-    <button style="width:80%" (click)="pictureSelector()">8、相册选择</button>
-</div>
-<div style="text-align:center; margin-top:10px">
-    <button style="width:80%" (click)="shareParameter()">9、分享</button>
-</div>
-
 
 <router-outlet></router-outlet>

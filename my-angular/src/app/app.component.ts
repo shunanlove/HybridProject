@@ -18,40 +18,8 @@ export class AppComponent {
 
   }
 
-  close() {
-    this.mService.close();
-  }
-
-  nativeAlert(msg: string) {
-    this.mService.nativeAlert('你好');
-  }
 
   scanQrCode() {
     this.mService.scanQrCode();
   }
-
-  goToBaiduMap(lat: string, lng: string, addressStr: string) {
-    this.mService.goToBaiduMap(lat, lng, addressStr);
-  }
-
-  goToGaodeMap(lat: string, lng: string, addressStr: string) {
-    this.mService.goToGaodeMap(lat, lng, addressStr);
-  }
-
-  goToTencentMap(lat: string, lng: string, addressStr: string) {
-    this.mService.goToTencentMap(lat, lng, addressStr);
-  }
-
-  callPhone(number: string) {
-    this.mService.callPhone(number);
-  }
-
-  pictureSelector() {
-    this.mService.pictureSelector();
-  }
-
-  shareParameter() {
-    this.mService.shareParameter();
-  }
-
 }
