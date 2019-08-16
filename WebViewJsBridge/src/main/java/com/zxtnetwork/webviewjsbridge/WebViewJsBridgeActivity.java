@@ -11,7 +11,6 @@ import android.view.Window;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.gson.Gson;
-import com.orhanobut.logger.Logger;
 import com.shunan.webviewjsbridge.BuildConfig;
 import com.shunan.webviewjsbridge.R;
 import com.tencent.smtt.sdk.WebSettings;
@@ -36,7 +35,7 @@ public class WebViewJsBridgeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Logger.d("onCreate");
+//        Logger.d("onCreate");
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getSupportActionBar().hide();// 隐藏ActionBar
         setContentView(R.layout.activity_web_view);
@@ -88,7 +87,7 @@ public class WebViewJsBridgeActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        Logger.d("onResume");
+//        Logger.d("onResume");
 
     }
 

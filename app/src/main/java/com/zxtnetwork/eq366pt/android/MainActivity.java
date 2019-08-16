@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Logger.d("onCreate");
+//        Logger.d("onCreate");
         setContentView(R.layout.activity_main);
 //        butterknife
         Intent intent = new Intent(MainActivity.this, WebViewJsBridgeActivity.class);

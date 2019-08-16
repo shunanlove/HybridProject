@@ -6,7 +6,7 @@ import ZxtJsSdk from "../lib/zxt-js-sdk";
 })
 export class ZxtJsSdkService {
   constructor() {
-    console.log('###initService###');
+    console.log('###Init_Zxt_Js_Sdk_Service###');
   }
   close(): void {
     ZxtJsSdk.close();
@@ -18,30 +18,17 @@ export class ZxtJsSdkService {
 
   scanQrCode(callBack: any): void {
     ZxtJsSdk.scanQrCode(callBack);
-
-    // ZxtJsSdk.ready({
-    //   onSuccess: () => {
-
-    //     ZxtJsSdk.scanQrCode({
-    //       onSuccess: (res: string) => {
-    //         console.log('二维码：' + res);
-    //         ZxtJsSdk.nativeAlert('二维码：' + res);
-    //       }
-    //     });
-
-    //   }
-    // });
   }
 
-  goToBaiduMap(params: string): void {
+  goToBaiduMap(params: any): void {
     ZxtJsSdk.goToBaiduMap(params);
   }
 
-  goToGaodeMap(params: string): void {
+  goToGaodeMap(params: any): void {
     ZxtJsSdk.goToGaodeMap(params);
   }
 
-  goToTencentMap(params: string): void {
+  goToTencentMap(params: any): void {
     ZxtJsSdk.goToTencentMap(params);
   }
 

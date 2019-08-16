@@ -70,4 +70,16 @@ public class ShareData {
     public void setType(String type) {
         this.type = type;
     }
+
+    @Override
+    public String toString() {
+        return "ShareData{" +
+                "type='" + type + '\'' +
+                ", title='" + title + '\'' +
+                ", titleUrl='" + titleUrl + '\'' +
+                ", text='" + text + '\'' +
+                ", url='" + url + '\'' +
+                ", imageUrl='" + imageUrl + '\'' +
+                '}';
+    }
 }

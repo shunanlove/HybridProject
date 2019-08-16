@@ -8,7 +8,6 @@ import android.content.pm.ActivityInfo;
 import android.net.Uri;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 import android.webkit.JavascriptInterface;
 import android.widget.Toast;
 
@@ -17,6 +16,7 @@ import com.google.gson.Gson;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
 import com.karumi.dexter.listener.PermissionGrantedResponse;
+import com.orhanobut.logger.Logger;
 import com.tencent.mm.opensdk.modelpay.PayReq;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
@@ -342,22 +342,23 @@ public class JsInterface {
         @Override
         public void onComplete(Platform platform, int i, HashMap<String, Object> hashMap) {
             //成功
-            Log.d("ShareCallback", "分享成功");
-            Toast.makeText(activity,"分享成功",Toast.LENGTH_LONG).show();
+            Logger.d("分享成功");
+            webView.loadUrl("javascript:shareParameter_callBack('0')");
+
         }
 
         @Override
         public void onError(Platform platform, int i, Throwable throwable) {
             //失败
-            Log.d("ShareCallback", "分享失败");
-            Toast.makeText(activity,"分享失败",Toast.LENGTH_LONG).show();
+            Logger.d("分享失败");
+            webView.loadUrl("javascript:shareParameter_callBack('1')");
         }
 
         @Override
         public void onCancel(Platform platform, int i) {
             //关闭
-            Log.d("ShareCallback", "分享关闭");
-            Toast.makeText(activity,"分享关闭",Toast.LENGTH_LONG).show();
+            Logger.d("分享关闭");
+            webView.loadUrl("javascript:shareParameter_callBack('2')");
         }
     }
 
