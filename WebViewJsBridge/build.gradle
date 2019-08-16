@@ -24,6 +24,14 @@ android {
             jni.srcDirs = []
         }
     }
+
+    buildTypes {
+        release {
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        debug {
+        }
+    }
 }
 repositories {
     flatDir {
@@ -50,6 +58,7 @@ dependencies {
     api(name: 'alipaySdk-15.6.5-20190718211159-noUtdid', ext: 'aar')
     api 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:+'
     api 'org.greenrobot:eventbus:3.1.1'
+//    api 'com.android.support:multidex:1.0.3'
 
 
 }

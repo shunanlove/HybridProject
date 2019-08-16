@@ -8,7 +8,6 @@ import android.content.pm.ActivityInfo;
 import android.net.Uri;
 import android.os.Handler;
 import android.os.Message;
-import android.text.TextUtils;
 import android.util.Log;
 import android.webkit.JavascriptInterface;
 import android.widget.Toast;
@@ -28,6 +27,7 @@ import com.zhihu.matisse.internal.entity.CaptureStrategy;
 import com.zxtnetwork.webviewjsbridge.event.MessageEvent;
 import com.zxtnetwork.webviewjsbridge.listener.MyMultiplePermissionListener;
 import com.zxtnetwork.webviewjsbridge.listener.MyPermissionListener;
+import com.zxtnetwork.webviewjsbridge.model.LocationData;
 import com.zxtnetwork.webviewjsbridge.model.NameValuePair;
 import com.zxtnetwork.webviewjsbridge.model.ShareData;
 import com.zxtnetwork.webviewjsbridge.model.WxPayData;
@@ -49,7 +49,6 @@ import java.util.Random;
 import cn.sharesdk.framework.Platform;
 import cn.sharesdk.framework.PlatformActionListener;
 import cn.sharesdk.onekeyshare.OnekeyShare;
-import cn.sharesdk.wechat.friends.Wechat;
 
 
 public class JsInterface {
@@ -143,19 +142,18 @@ public class JsInterface {
     /**
      * 跳转百度地图
      *
-     * @param mLat        //经度
-     * @param mLng        //维度
-     * @param mAddressStr //目的地
+     * @param params json:lat//经度 lng//维度 addressStr//目的地
      */
     @JavascriptInterface
-    public void goToBaiduMap(String mLat, String mLng, String mAddressStr) {
+    public void goToBaiduMap(String params) {
+        LocationData locationData = new Gson().fromJson(params, LocationData.class);
         if (!MyUtils.isInstalled(activity, "com.baidu.BaiduMap")) {
             Toast.makeText(activity, "请先安装百度地图客户端", Toast.LENGTH_LONG).show();
             return;
         }
         Intent intent = new Intent();
         intent.setData(Uri.parse("baidumap://map/direction?destination=latlng:"
-                + mLat + "," + mLng + "|name:" + mAddressStr + // 终点
+                + locationData.getLat() + "," + locationData.getLng() + "|name:" + locationData.getAddressStr() + // 终点
                 "&mode=driving" + // 导航路线方式
                 "&src=" + activity.getPackageName()));
         activity.startActivity(intent); // 启动调用
@@ -164,19 +162,19 @@ public class JsInterface {
     /**
      * 跳转高德地图
      *
-     * @param mLat        //经度
-     * @param mLng        //维度
-     * @param mAddressStr //目的地
+     * @param params json:lat//经度 lng//维度 addressStr//目的地
      */
     @JavascriptInterface
-    public void goToGaodeMap(String mLat, String mLng, String mAddressStr) {
+    public void goToGaodeMap(String params) {
+        LocationData locationData = new Gson().fromJson(params, LocationData.class);
         if (!MyUtils.isInstalled(activity, "com.autonavi.minimap")) {
             Toast.makeText(activity, "请先安装高德地图客户端", Toast.LENGTH_LONG).show();
             return;
         }
         StringBuffer stringBuffer = new StringBuffer("androidamap://navi?sourceApplication=").append(activity.getPackageName());
-        stringBuffer.append("&lat=").append(mLat)
-                .append("&lon=").append(mLng).append("&keywords=" + mAddressStr)
+        stringBuffer.append("&lat=")
+                .append(locationData.getLat())
+                .append("&lon=").append(locationData.getLng()).append("&keywords=" + locationData.getAddressStr())
                 .append("&dev=").append(0)
                 .append("&style=").append(2);
         Intent intent = new Intent("android.intent.action.VIEW", Uri.parse(stringBuffer.toString()));
@@ -187,18 +185,21 @@ public class JsInterface {
     /**
      * 跳转腾讯地图
      *
-     * @param mLat        //经度
-     * @param mLng        //维度
-     * @param mAddressStr //目的地
+     * @param params json:lat//经度 lng//维度 addressStr//目的地
      */
     @JavascriptInterface
-    public void goToTencentMap(String mLat, String mLng, String mAddressStr) {
+    public void goToTencentMap(String params) {
+        LocationData locationData = new Gson().fromJson(params, LocationData.class);
         if (!MyUtils.isInstalled(activity, "com.tencent.map")) {
             Toast.makeText(activity, "请先安装腾讯地图客户端", Toast.LENGTH_LONG).show();
             return;
         }
         StringBuffer stringBuffer = new StringBuffer("qqmap://map/routeplan?type=drive")
-                .append("&tocoord=").append(mLat).append(",").append(mLng).append("&to=" + mAddressStr);
+                .append("&tocoord=")
+                .append(locationData.getLat())
+                .append(",")
+                .append(locationData.getLng())
+                .append("&to=" + locationData.getAddressStr());
         Intent intent = new Intent("android.intent.action.VIEW", Uri.parse(stringBuffer.toString()));
         activity.startActivity(intent);
     }
@@ -315,7 +316,6 @@ public class JsInterface {
      */
     public void showShare(ShareData shareData) {
         OnekeyShare oks = new OnekeyShare();
-        oks.setPlatform(Wechat.NAME);
         //关闭sso授权
         oks.disableSSOWhenAuthorize();
         // title标题，印象笔记、邮箱、信息、微信、人人网和QQ空间使用
@@ -343,18 +343,21 @@ public class JsInterface {
         public void onComplete(Platform platform, int i, HashMap<String, Object> hashMap) {
             //成功
             Log.d("ShareCallback", "分享成功");
+            Toast.makeText(activity,"分享成功",Toast.LENGTH_LONG).show();
         }
 
         @Override
         public void onError(Platform platform, int i, Throwable throwable) {
             //失败
             Log.d("ShareCallback", "分享失败");
+            Toast.makeText(activity,"分享失败",Toast.LENGTH_LONG).show();
         }
 
         @Override
         public void onCancel(Platform platform, int i) {
             //关闭
             Log.d("ShareCallback", "分享关闭");
+            Toast.makeText(activity,"分享关闭",Toast.LENGTH_LONG).show();
         }
     }
 

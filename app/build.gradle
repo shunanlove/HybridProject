@@ -11,6 +11,12 @@ android {
         versionName "1.0"
     }
     signingConfigs {
+        config {
+            storeFile file('../zxt.jks')
+            storePassword 'android'
+            keyAlias = 'key'
+            keyPassword 'android'
+        }
         release {
             storeFile file('../zxt.jks')
             storePassword 'android'
@@ -26,8 +32,8 @@ android {
     }
     buildTypes {
         release {
-            minifyEnabled false
-            debuggable true
+            minifyEnabled true
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
         }

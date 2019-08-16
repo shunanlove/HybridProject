@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import ZxtJsSdk from "../assets/lib/zxt-js-sdk";
+import ZxtJsSdk from "../lib/zxt-js-sdk";
 
 @Injectable({
   providedIn: 'root'
@@ -8,13 +8,16 @@ export class ZxtJsSdkService {
   constructor() {
     console.log('###initService###');
   }
+  close(): void {
+    ZxtJsSdk.close();
+  }
 
-  scanQrCode() {
-    ZxtJsSdk.scanQrCode({
-      onSuccess: (res: string) => {
-        console.log('二维码：' + res);
-      }
-    });
+  nativeAlert(msg: string): void {
+    ZxtJsSdk.nativeAlert(msg);
+  }
+
+  scanQrCode(callBack: any): void {
+    ZxtJsSdk.scanQrCode(callBack);
 
     // ZxtJsSdk.ready({
     //   onSuccess: () => {
@@ -25,8 +28,41 @@ export class ZxtJsSdkService {
     //         ZxtJsSdk.nativeAlert('二维码：' + res);
     //       }
     //     });
-        
+
     //   }
     // });
   }
+
+  goToBaiduMap(params: string): void {
+    ZxtJsSdk.goToBaiduMap(params);
+  }
+
+  goToGaodeMap(params: string): void {
+    ZxtJsSdk.goToGaodeMap(params);
+  }
+
+  goToTencentMap(params: string): void {
+    ZxtJsSdk.goToTencentMap(params);
+  }
+
+  callPhone(number: string): void {
+    ZxtJsSdk.callPhone(number);
+  }
+
+  pictureSelector(callBack: any): void {
+    ZxtJsSdk.pictureSelector(callBack);
+  }
+
+  shareParameter(params: any, callBack: any): void {
+    ZxtJsSdk.shareParameter(params, callBack);
+  }
+
+  wxPay(params: any, callBack: any): void {
+    ZxtJsSdk.wxPay(params, callBack);
+  }
+
+  AliPay(params: string, callBack: any): void {
+    ZxtJsSdk.AliPay(params, callBack);
+  }
+
 }
