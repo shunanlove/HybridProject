@@ -89,8 +89,7 @@ callPhone(String phoneNum)
  */
  shareParameter(String shareJson)
 
- /**
- * 支付宝支付
- * @param url
- */
+### 支付宝支付
+- @param url 发发发
+
 
