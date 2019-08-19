@@ -5,6 +5,7 @@ import android.content.Context;
 import com.mob.MobSDK;
 import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.Logger;
+import com.orhanobut.logger.PrettyFormatStrategy;
 import com.shunan.webviewjsbridge.BuildConfig;
 import com.tencent.smtt.sdk.QbSdk;
 
@@ -22,7 +23,7 @@ public class JsConfig {
                 Logger.d("是否启动X5内核：" + b);
             }
         });
-        Logger.addLogAdapter(new AndroidLogAdapter() {
+        Logger.addLogAdapter(new AndroidLogAdapter(PrettyFormatStrategy.newBuilder().tag("APP_LOG").build()) {
             @Override
             public boolean isLoggable(int priority, String tag) {
                 return BuildConfig.DEBUG;
