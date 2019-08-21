@@ -17,6 +17,7 @@ import com.tencent.smtt.sdk.WebSettings;
 import com.tencent.smtt.sdk.WebView;
 import com.tencent.smtt.sdk.WebViewClient;
 import com.zhihu.matisse.Matisse;
+import com.zxtnetwork.webviewjsbridge.utils.WebUtile;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,8 +29,7 @@ public class WebViewJsBridgeActivity extends AppCompatActivity {
     private static final String OPEN = "open://";
 
     private WebView webView;
-    private WebSettings webSettings;
-    private JsInterface jsInterface;
+
     private Bundle extras;
 
     @Override
@@ -48,27 +48,8 @@ public class WebViewJsBridgeActivity extends AppCompatActivity {
     }
 
     private void initWebView() {
-        webView.setHorizontalScrollBarEnabled(false);//隐藏横向滚动条
-        webView.setVerticalScrollBarEnabled(false); //隐藏纵向滚动条
-        webView.setScrollBarStyle(View.SCROLLBARS_OUTSIDE_OVERLAY);
-        webSettings = webView.getSettings();
-        webSettings.setJavaScriptEnabled(true);
-        webSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NARROW_COLUMNS);//适应屏幕，内容将自动缩放
-        webSettings.setUseWideViewPort(false);//这里需要设置为true，才能让Webivew支持<meta>标签的viewport属性
-        webSettings.setDatabaseEnabled(false);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            webView.setWebContentsDebuggingEnabled(true);
-        }
-//        webSettings.setUserAgent(webSettings.getUserAgentString());
-        jsInterface = new JsInterface(this, webView);
-        webView.addJavascriptInterface(jsInterface, "JsInterface");
-
-        webSettings.setUserAgentString(webSettings.getUserAgentString()
-                + ";deviceType/Android"
-                + ";VERSION_CODE/" + BuildConfig.VERSION_CODE
-                + ";VERSION_NAME/" + BuildConfig.VERSION_NAME);
-
+        WebUtile.initWeb(webView,this);
         webView.setWebViewClient(new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView webView, String s) {

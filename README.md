@@ -60,6 +60,7 @@ callPhone(String phoneNum)
  * (2)在library的gradle中引入:apply from: '../MobSDK.gradle'
  * (3)在app的gradle中引入:apply plugin: 'com.mob.sdk'
  * (4)新建mobSdk.gradle;
+  shareParameter(String shareJson)
  代码如下:
  apply plugin: 'com.mob.sdk'
  MobSDK {
@@ -90,6 +91,55 @@ callPhone(String phoneNum)
  shareParameter(String shareJson)
 
 #### 支付宝支付
-- @param url 发发发
+- @param url
+ AliPay(String url)
+ 集成步骤:
+ 1.将 alipaySdk-15.5.7-20181023110917.aar 包放在您的应用工程的 libs 目录下
+ 2.在主项目的 build.gradle 中，添加下面的内容，将 libs 目录作为依赖仓库：
+ allprojects {
+     repositories {
 
+         // 添加下面的内容
+         flatDir {
+             dirs 'libs'
+         }
+
+         // ... jcenter() 等其他仓库
+     }
+ }
+ 3.在您 App Module 的 build.gradle 中，添加下面的内容，将支付宝 SDK 作为项目依赖：
+ dependencies {
+
+     // 添加下面的内容
+     compile (name: 'alipaySdk-15.5.7-20181023110917', ext: 'aar')
+
+     // ... 其他依赖项
+ }
+ 4.支付接口调用
+ final String orderInfo = info;   // 订单信息
+
+ 		Runnable payRunnable = new Runnable() {
+
+ 			@Override
+ 			public void run() {
+ 				PayTask alipay = new PayTask(DemoActivity.this);
+                Map <String,String> result = alipay.payV2(orderInfo,true);
+
+ 				Message msg = new Message();
+ 				msg.what = SDK_PAY_FLAG;
+ 				msg.obj = result;
+ 				mHandler.sendMessage(msg);
+ 			}
+ 		};
+ 	     // 必须异步调用
+ 		Thread payThread = new Thread(payRunnable);
+ 		payThread.start();
+ 5.支付结果获取和处理
+ private Handler mHandler = new Handler() {
+ 		public void handleMessage(Message msg) {
+ 			Result result = new Result((String) msg.obj);
+ 			Toast.makeText(DemoActivity.this, result.getResult(),
+ 						Toast.LENGTH_LONG).show();
+ 		};
+ 	};
 
