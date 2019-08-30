@@ -43,8 +43,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 //        butterknife
         Intent intent = new Intent(MainActivity.this, WebViewJsBridgeActivity.class);
-//        intent.putExtra("url", "file:////android_asset/test.html");
-        intent.putExtra("url", "http://172.18.2.250:4200");
+        intent.putExtra("url", "file:////android_asset/test.html");
+//        intent.putExtra("url", "http://172.18.2.250:4200");
 //        intent.putExtra("url", "http://sn.dev.zeq366.net/");
 //        intent.putExtra("url", "http://www.baidu.com");
 
